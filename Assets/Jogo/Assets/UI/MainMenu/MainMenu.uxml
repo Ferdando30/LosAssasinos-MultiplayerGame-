@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="Holder" style="flex-grow: 1; justify-content: flex-end;">
+        <ui:Image name="Background" style="background-color: rgb(168, 0, 26); height: 733px; align-content: center; align-self: stretch; justify-content: flex-start;">
+            <ui:Label text="Titulo" style="align-self: center; justify-content: flex-start; align-items: flex-start; align-content: center; font-size: 57px; -unity-text-align: middle-center; -unity-font-style: normal; top: 62px;"/>
+            <ui:VisualElement name="BtnHolder" style="flex-grow: 1; justify-content: center; top: 90px;">
+                <ui:Button text="Host" name="HostBtn" style="align-content: center; align-self: center; justify-content: center; height: 51px; width: 142px; bottom: auto; top: -100px;"/>
+                <ui:Button text="Client" name="ClientBtn" style="align-content: center; align-self: center; justify-content: center; height: 51px; width: 142px; top: -50px;"/>
+                <ui:Button text="Options" name="OptionsBtn" style="align-content: center; align-self: center; justify-content: center; height: 51px; width: 142px; top: 0;"/>
+                <ui:TextField label="Ip Adress&#10;" placeholder-text="filler text" name="TextField" style="top: -262px; width: 338px; right: -756px; height: 47px;"/>
+                <ui:TextField label="Port&#10;" placeholder-text="filler text" name="TextField" style="top: -212px; width: 338px; right: -756px; height: 47px;"/>
+            </ui:VisualElement>
+        </ui:Image>
+    </ui:VisualElement>
+</ui:UXML>
