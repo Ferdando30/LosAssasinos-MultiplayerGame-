@@ -276,7 +276,7 @@ MonoBehaviour:
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 726485078}
-    PlayerPrefab: {fileID: 0}
+    PlayerPrefab: {fileID: 1803147111570246855, guid: 4f17f7cb62ee69648a0ea4e94e4b6cda, type: 3}
     Prefabs:
       NetworkPrefabsLists:
       - {fileID: 11400000, guid: b034619a7a12f3946becea1118901302, type: 2}
@@ -328,6 +328,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1623819471}
   - component: {fileID: 1623819470}
+  - component: {fileID: 1623819472}
   m_Layer: 5
   m_Name: MainMenuUI
   m_TagString: Untagged
@@ -373,6 +374,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1623819472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1623819469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7c4d9d959679074da28100cfdba852f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Modo
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

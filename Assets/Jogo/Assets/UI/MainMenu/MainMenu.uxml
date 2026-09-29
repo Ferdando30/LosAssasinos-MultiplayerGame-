@@ -6,8 +6,8 @@
                 <ui:Button text="Host" name="HostBtn" style="align-content: center; align-self: center; justify-content: center; height: 51px; width: 142px; bottom: auto; top: -100px;"/>
                 <ui:Button text="Client" name="ClientBtn" style="align-content: center; align-self: center; justify-content: center; height: 51px; width: 142px; top: -50px;"/>
                 <ui:Button text="Options" name="OptionsBtn" style="align-content: center; align-self: center; justify-content: center; height: 51px; width: 142px; top: 0;"/>
-                <ui:TextField label="Ip Adress&#10;" placeholder-text="filler text" name="TextField" style="top: -262px; width: 338px; right: -756px; height: 47px;"/>
-                <ui:TextField label="Port&#10;" placeholder-text="filler text" name="TextField" style="top: -212px; width: 338px; right: -756px; height: 47px;"/>
+                <ui:TextField label="Ip Adress&#10;" placeholder-text="filler text" name="IpAdress" style="top: -262px; width: 338px; right: -756px; height: 47px;"/>
+                <ui:TextField label="Port&#10;" placeholder-text="filler text" name="PortAdress" style="top: -212px; width: 338px; right: -756px; height: 47px;"/>
             </ui:VisualElement>
         </ui:Image>
     </ui:VisualElement>
