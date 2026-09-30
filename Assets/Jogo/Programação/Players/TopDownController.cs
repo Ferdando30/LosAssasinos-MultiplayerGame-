@@ -8,6 +8,7 @@ public class TopDownController : MonoBehaviour
     public float walk_speed;
     public Animator animator;
     public SpriteRenderer spriteRenderer;
+    
 
     Vector2 direction;
 
@@ -15,20 +16,19 @@ public class TopDownController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         direction = context.ReadValue<Vector2>();
+        if (direction != Vector2.zero)
+        {
+            animator.SetFloat("Speed", 1f);
+        }
+        else
+        {
+            animator.SetFloat("Speed", 0f);
+        }
     }
 
     private void FixedUpdate()
     {
         body.linearVelocity = direction.normalized * walk_speed;
-
-        bool isMoving = direction.sqrMagnitude > 0.001f;
-
-        animator.speed = isMoving ? 1f : 0f;
-
-        if (!isMoving)
-        {
-            animator.Play(0, 0, 0f);
-        }
 
         if (direction.x < 0)
         {

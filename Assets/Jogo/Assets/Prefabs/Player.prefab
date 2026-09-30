@@ -287,7 +287,7 @@ Animator:
   m_GameObject: {fileID: 1803147111570246855}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 05e932e6f9fa40247a35477227c7884a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6704de72ac8f6c046b3c06ba8b728ff6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -363,9 +363,5 @@ MonoBehaviour:
   m_Animator: {fileID: -5869306402659513726}
   TransitionStateInfoList: []
   AnimatorParameterEntries:
-    ParameterEntries:
-    - name: Speed
-      NameHash: -823668238
-      Synchronize: 1
-      ParameterType: 1
+    ParameterEntries: []
   AnimatorParametersExpanded: 0
