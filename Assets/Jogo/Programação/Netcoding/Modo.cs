@@ -1,5 +1,4 @@
 using System.Net;
-using TMPro;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEditor.Experimental.GraphView;
@@ -30,6 +29,11 @@ public class Modo : MonoBehaviour
         ClientBtn.RegisterCallback<ClickEvent>(Client);
 
         tela.visible = true;
+
+        if (PlayerPrefs.HasKey("ip"))
+            IP.value = PlayerPrefs.GetString("ip");
+        if (PlayerPrefs.HasKey("port"))
+            Port.value = PlayerPrefs.GetString("port");
     }
 
     private void Host(ClickEvent clickEvent)
@@ -38,7 +42,8 @@ public class Modo : MonoBehaviour
         transport.SetConnectionData("127.0.0.1", ushort.Parse(Port.value), "0.0.0.0");
         //SceneManager.LoadScene("MainGameScene");
         tela.visible = false;
-        NetworkManager.Singleton.StartHost();      
+        NetworkManager.Singleton.StartHost();
+        GravarReferencia();
     }
 
     private void Client(ClickEvent clickEvent)
@@ -48,5 +53,12 @@ public class Modo : MonoBehaviour
         // SceneManager.LoadScene("MainGameScene");
         tela.visible = false;
         NetworkManager.Singleton.StartClient();
+        GravarReferencia();
+    }
+
+    private void GravarReferencia()
+    {
+        PlayerPrefs.SetString("ip", IP.value);
+        PlayerPrefs.SetString("port", Port.value);
     }
 }

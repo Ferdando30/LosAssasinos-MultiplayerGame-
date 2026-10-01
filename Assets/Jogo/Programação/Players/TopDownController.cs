@@ -12,6 +12,7 @@ public class TopDownController : NetworkBehaviour
     
 
     Vector2 direction;
+    private bool AtualFlipX;
 
 
     public void OnMove(InputAction.CallbackContext context)
@@ -25,31 +26,37 @@ public class TopDownController : NetworkBehaviour
         {
             animator.SetFloat("Speed", 0f);
         }
+
+        if (IsOwner && direction.x != 0)
+        {
+            bool shouldFlipX = direction.x < 0;
+
+            
+            if (shouldFlipX != AtualFlipX)
+            {
+                AtualFlipX = shouldFlipX;
+                SetSpriteFlipRpc(shouldFlipX);
+            }
+        }
     }
 
     private void FixedUpdate()
     {
         body.linearVelocity = direction.normalized * walk_speed;
 
-        SpriteFlipServerRpc();
+        
     }
 
     [Rpc(SendTo.Server)]
-    private void SpriteFlipServerRpc()
+    private void SetSpriteFlipRpc(bool flipX)
     {
-        SpriteFlipClientRpc();
+        ApplySpriteFlipRpc(flipX);
     }
 
     [Rpc(SendTo.Everyone)]
-    private void SpriteFlipClientRpc()
+    private void ApplySpriteFlipRpc(bool flipX)
     {
-        if (direction.x < 0)
-        {
-            spriteRenderer.flipX = true;
-        }
-        else if (direction.x > 0)
-        {
-            spriteRenderer.flipX = false;
-        }
+        spriteRenderer.flipX = flipX;
+        AtualFlipX = flipX;
     }
 }
