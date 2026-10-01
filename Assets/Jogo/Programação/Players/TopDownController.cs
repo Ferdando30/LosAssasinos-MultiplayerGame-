@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Netcode;
 
 
-public class TopDownController : MonoBehaviour
+public class TopDownController : NetworkBehaviour
 {
     public Rigidbody2D body;
     public float walk_speed;
@@ -30,6 +31,18 @@ public class TopDownController : MonoBehaviour
     {
         body.linearVelocity = direction.normalized * walk_speed;
 
+        SpriteFlipServerRpc();
+    }
+
+    [Rpc(SendTo.Server)]
+    private void SpriteFlipServerRpc()
+    {
+        SpriteFlipClientRpc();
+    }
+
+    [Rpc(SendTo.Everyone)]
+    private void SpriteFlipClientRpc()
+    {
         if (direction.x < 0)
         {
             spriteRenderer.flipX = true;
