@@ -17,7 +17,13 @@ public class TopDownController : NetworkBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (!IsOwner)
+        {
+            return;
+        }
+
         direction = context.ReadValue<Vector2>();
+
         if (direction != Vector2.zero)
         {
             animator.SetFloat("Speed", 1f);
@@ -42,9 +48,12 @@ public class TopDownController : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        body.linearVelocity = direction.normalized * walk_speed;
+        if (!IsOwner)
+        {
+            return;
+        }
 
-        
+        body.linearVelocity = direction.normalized * walk_speed;
     }
 
     [Rpc(SendTo.Server)]
