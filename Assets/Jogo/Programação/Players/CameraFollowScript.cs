@@ -1,7 +1,6 @@
 using UnityEngine;
 using Cinemachine;
 using Unity.Netcode;
-using UnityEngine;
 using System.Collections;
 
 
