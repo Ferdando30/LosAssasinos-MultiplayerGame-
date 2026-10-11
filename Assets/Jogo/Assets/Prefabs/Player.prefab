@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 4762409094720616299}
   - component: {fileID: 8377556809536055667}
   - component: {fileID: 5741315115876698908}
+  - component: {fileID: -2108189120702438847}
   - component: {fileID: 3871443072401527171}
   - component: {fileID: 5536572306991040512}
-  - component: {fileID: -2108189120702438847}
   - component: {fileID: 341600942420934131}
   - component: {fileID: -1851502490896304533}
   - component: {fileID: -5869306402659513726}
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: -8919689099978059571, guid: 476c9abff9659a946883cd291bbe4144, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -127,6 +127,33 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &-2108189120702438847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1803147111570246855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 3904197687
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  m_InScenePlaced: 0
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &3871443072401527171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,6 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3cf7f8c359a3bd4393e4fe6eb78d41b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  ShowTopMostFoldoutHeaderGroup: 1
   body: {fileID: 5741315115876698908}
   walk_speed: 2.5
   animator: {fileID: -5869306402659513726}
@@ -189,33 +217,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &-2108189120702438847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1803147111570246855}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3904197687
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  m_InScenePlacedDisabledByDefault: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  m_InScenePlaced: 0
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
 --- !u!114 &341600942420934131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,7 +288,7 @@ Animator:
   m_GameObject: {fileID: 1803147111570246855}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 05e932e6f9fa40247a35477227c7884a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6704de72ac8f6c046b3c06ba8b728ff6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
