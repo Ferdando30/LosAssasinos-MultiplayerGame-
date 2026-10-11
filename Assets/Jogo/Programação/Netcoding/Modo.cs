@@ -16,7 +16,7 @@ public class Modo : MonoBehaviour
     private TextField Port;
 
     private VisualElement telaInicial;
-    private VisualElement tela;
+    
     private VisualElement telaServers;
     private VisualElement telaCriar;
     private VisualElement telaEntrar;
@@ -33,7 +33,7 @@ public class Modo : MonoBehaviour
         IP = root.Q<TextField>("IpAdress");
         Port = root.Q<TextField>("PortAdress");
 
-        tela = root.Q<VisualElement>("Holder");
+        
         telaInicial = root.Q<VisualElement>("TelaInicial");
         telaServers = root.Q<VisualElement>("ServerHolder");
         telaCriar = root.Q<VisualElement>("TelaHostServer");
@@ -59,23 +59,39 @@ public class Modo : MonoBehaviour
     {
         UnityTransport transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
         transport.SetConnectionData("127.0.0.1", ushort.Parse(Port.value), "0.0.0.0");
-        //SceneManager.LoadScene("MainGameScene");
-        tela.visible = false;
-        telaCriar.visible = false;
-        telaServers.visible = false;
-        NetworkManager.Singleton.StartHost();
+       
+        bool iniciou = NetworkManager.Singleton.StartHost();
+
+        if (iniciou)
+        {
+            NetworkManager.Singleton.SceneManager.LoadScene(
+                "MainGameScene",
+                LoadSceneMode.Single
+            );
+        }
         GravarReferencia();
     }
 
     private void Client(ClickEvent clickEvent)
     {
-        UnityTransport transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-        transport.SetConnectionData(IP.value, ushort.Parse(Port.value));
-        // SceneManager.LoadScene("MainGameScene");
-        tela.visible = false;
-        telaServers.visible = false;
-        telaEntrar.visible = false;
-        NetworkManager.Singleton.StartClient();
+        NetworkManager manager = NetworkManager.Singleton;
+
+        if (manager.IsListening)
+            return;
+
+        UnityTransport transport = manager.GetComponent<UnityTransport>();
+        ushort porta = ushort.Parse(Port.value);
+        string ipDoHost = IP.value.Trim();
+
+        if (string.IsNullOrWhiteSpace(ipDoHost))
+        {
+            Debug.LogError("Digite o IP do computador host.");
+            return;
+        }
+
+        transport.SetConnectionData(ipDoHost, porta);
+        manager.StartClient();
+
         GravarReferencia();
     }
 
@@ -100,4 +116,6 @@ public class Modo : MonoBehaviour
         telaCriar.visible = false;
         telaEntrar.visible = true;
     }
+
+   
 }
