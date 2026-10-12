@@ -1,0 +1,10 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Holder" style="flex-grow: 1;">
+        <ui:VisualElement name="LightsMiniGame" style="flex-grow: 1; flex-direction: column; flex-wrap: nowrap;">
+            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(255, 255, 255); width: 668px; height: 10px; align-self: center; top: 88px;"/>
+            <ui:Button text="Lights Off" name="LightsBtn" style="top: -239px; width: 132px; right: -553px;"/>
+            <ui:Button text="X" name="ExitBtn" style="top: -590px; width: 132px; right: -775px;"/>
+        </ui:VisualElement>
+        <ui:Button text="Open Task" name="InteractBtn" style="width: 122px; right: -1056px; top: -65px;"/>
+    </ui:VisualElement>
+</ui:UXML>
