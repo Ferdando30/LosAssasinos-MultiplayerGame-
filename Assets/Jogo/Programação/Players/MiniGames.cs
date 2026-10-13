@@ -31,25 +31,18 @@ public class MiniGames : NetworkBehaviour
         
 
         LightsFather.SetActive(true);
-        //LightsBtn.RegisterCallback<ClickEvent>(TurnLightsOff);
+        LightsBtn.RegisterCallback<ClickEvent>(TurnLightsOff);
     }
 
     public override void OnNetworkSpawn()
     {
-        if(LightsBtn != null)
-        {
-            LightsBtn.RegisterCallback<ClickEvent>(TurnLightsOff);
-        }
-       
+        
+        LightChecker.OnValueChanged += OnLightChange;
     }
 
     public override void OnNetworkDespawn()
     {
-        if (LightsBtn != null)
-        {
-            LightsBtn.UnregisterCallback<ClickEvent>(TurnLightsOff);
-        }
-            
+        LightChecker.OnValueChanged -= OnLightChange;
     }
 
     void OpenMiniGames(ClickEvent clickEvent)
@@ -63,17 +56,17 @@ public class MiniGames : NetworkBehaviour
     }
     void TurnLightsOff(ClickEvent clickEvent)
     {
-        if (!IsSpawned) return;
-
         TurnLightsOffRpc();
-        Debug.Log("Opa");
+    }
+
+    private void OnLightChange(bool previousValue, bool newValue)
+    {
+        LightsFather.SetActive(false);
     }
 
     [Rpc(SendTo.Server)]
     void TurnLightsOffRpc()
     {
         LightChecker.Value = true;
-        LightsFather.SetActive(false);
-        Debug.Log("RPC executado no servidor com sucesso!");
     }
 }
