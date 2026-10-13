@@ -1,8 +1,8 @@
-using UnityEngine.UIElements;
-using UnityEditor.Experimental.GraphView;
+using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class MiniGames : MonoBehaviour
+public class MiniGames : NetworkBehaviour
 {
     private VisualElement TelaLights;
 
@@ -12,8 +12,10 @@ public class MiniGames : MonoBehaviour
 
     public GameObject LightsFather;
 
+   
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
 
@@ -26,9 +28,28 @@ public class MiniGames : MonoBehaviour
 
         OpenMiniGame.RegisterCallback<ClickEvent>(OpenMiniGames);
         ExitMiniGame.RegisterCallback<ClickEvent>(CloseMiniGames);
-        LightsBtn.RegisterCallback<ClickEvent>(TurnLightsOff);
+        
 
         LightsFather.SetActive(true);
+        //LightsBtn.RegisterCallback<ClickEvent>(TurnLightsOff);
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        if(LightsBtn != null)
+        {
+            LightsBtn.RegisterCallback<ClickEvent>(TurnLightsOff);
+        }
+       
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        if (LightsBtn != null)
+        {
+            LightsBtn.UnregisterCallback<ClickEvent>(TurnLightsOff);
+        }
+            
     }
 
     void OpenMiniGames(ClickEvent clickEvent)
@@ -40,9 +61,18 @@ public class MiniGames : MonoBehaviour
     {
         TelaLights.visible = false;
     }
-
     void TurnLightsOff(ClickEvent clickEvent)
     {
+        if (!IsSpawned) return;
+
+        TurnLightsOffRpc();
+        Debug.Log("Opa");
+    }
+
+    [Rpc(SendTo.Server)]
+    void TurnLightsOffRpc()
+    {
         LightsFather.SetActive(false);
+        Debug.Log("RPC executado no servidor com sucesso!");
     }
 }
