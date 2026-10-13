@@ -11,8 +11,8 @@ public class MiniGames : NetworkBehaviour
     private Button LightsBtn;
 
     public GameObject LightsFather;
+    public NetworkVariable<bool> LightChecker = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
-   
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -72,6 +72,7 @@ public class MiniGames : NetworkBehaviour
     [Rpc(SendTo.Server)]
     void TurnLightsOffRpc()
     {
+        LightChecker.Value = true;
         LightsFather.SetActive(false);
         Debug.Log("RPC executado no servidor com sucesso!");
     }
