@@ -11,7 +11,7 @@ public class TopDownController : NetworkBehaviour
     public SpriteRenderer spriteRenderer;
     
 
-    Vector2 direction;
+    Vector2 keyboard_direction;
     private bool AtualFlipX;
 
 
@@ -22,28 +22,7 @@ public class TopDownController : NetworkBehaviour
             return;
         }
 
-        direction = context.ReadValue<Vector2>();
-
-        if (direction != Vector2.zero)
-        {
-            animator.SetFloat("Speed", 1f);
-        }
-        else
-        {
-            animator.SetFloat("Speed", 0f);
-        }
-
-        if (IsOwner && direction.x != 0)
-        {
-            bool shouldFlipX = direction.x < 0;
-
-            
-            if (shouldFlipX != AtualFlipX)
-            {
-                AtualFlipX = shouldFlipX;
-                SetSpriteFlipRpc(shouldFlipX);
-            }
-        }
+        keyboard_direction = context.ReadValue<Vector2>();
     }
 
     private void FixedUpdate()
@@ -53,9 +32,32 @@ public class TopDownController : NetworkBehaviour
             return;
         }
 
-        body.linearVelocity = direction.normalized * walk_speed;
-    }
+        Vector2 joystick_direction = Vector2.zero;
 
+        if (Virtualjoystick.Instance != null )
+        {
+            joystick_direction = Virtualjoystick.Instance.Direction;
+        }
+
+        Vector2 movement_direction =
+        joystick_direction.sqrMagnitude > 0.01f ? joystick_direction : keyboard_direction;
+
+        body.linearVelocity = movement_direction.normalized * walk_speed;
+
+        animator.SetFloat("Speed", movement_direction.sqrMagnitude > 0.01f ? 1f : 0f);
+
+        if (movement_direction.x != 0)
+        {
+            bool should_flip_x = movement_direction.x < 0;
+
+            if (should_flip_x != AtualFlipX)
+            {
+                AtualFlipX = should_flip_x;
+                SetSpriteFlipRpc(should_flip_x);
+            }
+        }
+    }
+    
     [Rpc(SendTo.Server)]
     private void SetSpriteFlipRpc(bool flipX)
     {

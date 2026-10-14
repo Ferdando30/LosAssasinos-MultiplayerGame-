@@ -1,1 +1,37 @@
-VisualElement {}
+#Root {
+    position: absolute;
+    left: 24px;
+    bottom: 24px;
+    width: 180px;
+    height: 180px;
+}
+
+#Background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 160px;
+    height: 160px;
+
+    background-color: rgba(80, 80, 80, 0.45);
+
+    border-top-left-radius: 80px;
+    border-top-right-radius: 80px;
+    border-bottom-left-radius: 80px;
+    border-bottom-right-radius: 80px;
+}
+
+#Handle {
+    position: absolute;
+    left: 50px;
+    top: 50px;
+    width: 60px;
+    height: 60px;
+
+    background-color: rgba(230, 230, 230, 0.85);
+
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+}

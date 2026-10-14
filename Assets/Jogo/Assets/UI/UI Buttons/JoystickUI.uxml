@@ -1,4 +1,5 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Jogo/Assets/UI/UI%20Buttons/JoystickStyle.uss?fileID=7433441132597879392&amp;guid=6e34dd2742edde347a7fbdfb86fc4347&amp;type=3#JoystickStyle"/>
     <ui:VisualElement name="Root" style="flex-grow: 1;">
         <ui:VisualElement name="Background" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Jogo/Assets/Personagens/Players/Temp/Reeeeeeeeeeeeed.png?fileID=2800000&amp;guid=b9216eeeaaed5b248aca8a045731c0c4&amp;type=3#Reeeeeeeeeeeeed&quot;); opacity: 1; -unity-background-image-tint-color: rgba(255, 255, 255, 0.47);">
             <ui:VisualElement name="Handle" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Jogo/Assets/Personagens/Players/Temp/Reeeeeeeeeeeeed.png?fileID=2800000&amp;guid=b9216eeeaaed5b248aca8a045731c0c4&amp;type=3#Reeeeeeeeeeeeed&quot;); background-size: 75% 75%;"/>
