@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - LuzMiniGame
+  - PoisonMiniGame
   layers:
   - Default
   - TransparentFX

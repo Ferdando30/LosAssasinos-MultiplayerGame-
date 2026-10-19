@@ -10,10 +10,16 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
 
     public string zonaAtual = "Nenhuma";
     public Collider2D zonaLuz;
+    public Collider2D zonaPoison;
     private Transform playerLocal;
 
     public GameObject LightsFather;
+    public SpriteRenderer Drink;
+
     public NetworkVariable<bool> LightChecker = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    public NetworkVariable<bool> PoisonChecker = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+
+    
 
     //--------------------------------------------- (trigger)
     private void EncontrarPlayerLocal()
@@ -33,17 +39,23 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
     private void Zonas()
     {
         EncontrarPlayerLocal();
-        if (playerLocal == null || zonaLuz == null)
+        if (playerLocal == null || zonaLuz == null || zonaPoison == null)
             return;
 
         bool DentroLuz = zonaLuz.bounds.Contains(playerLocal.position);
+        bool DentroPoison = zonaPoison.bounds.Contains(playerLocal.position);
 
-        if (DentroLuz)
+        if (DentroLuz && !DentroPoison)
         {
             zonaAtual = "LuzMiniGame";
         }
 
-        else if (!DentroLuz)
+        else if(!DentroLuz && DentroPoison)
+        {
+            zonaAtual = "PoisonMiniGame";
+        }
+
+        else if (!DentroLuz && !DentroPoison)
         {
             zonaAtual = "Nenhuma";
         }
@@ -67,6 +79,11 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
             {
                 TurnLightsOffRpc();
             }
+
+            else if(zonaAtual == "PoisonMiniGame")
+            {
+                PoisonDrinkRpc();
+            }
         }
     }
 
@@ -77,11 +94,13 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
     {
         Debug.Log("Spawn");
         LightChecker.OnValueChanged += OnLightChange;
+        PoisonChecker.OnValueChanged += OnPoisonChange;
     }
 
     public override void OnNetworkDespawn()
     {
         LightChecker.OnValueChanged -= OnLightChange;
+        PoisonChecker.OnValueChanged -= OnPoisonChange;
     }
 
     //--------------------------------------------- (funções de UI)
@@ -106,9 +125,19 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
         LightsFather.SetActive(false);
     }
 
+    private void OnPoisonChange(bool previousValue, bool newValue)
+    {
+        Drink.color = Color.green;
+    }
+
     [Rpc(SendTo.Server)]
     void TurnLightsOffRpc()
     {
         LightChecker.Value = true;
+    }
+
+    void PoisonDrinkRpc()
+    {
+        PoisonChecker.Value = true;
     }
 }
