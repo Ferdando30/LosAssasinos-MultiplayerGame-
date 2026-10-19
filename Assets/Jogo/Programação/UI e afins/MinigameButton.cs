@@ -1,18 +1,75 @@
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.EventSystems;
 
-public class MinigameButton : NetworkBehaviour
+public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    [SerializeField] private GameObject basic_ui;
-    [SerializeField] private GameObject minigame;
+    private float requiredHoldTime = 2.0f;
+    private float currentHoldTime = 0f;
+    private bool isHolding = false;
+
+    public string zonaAtual = "Nenhuma";
+    public Collider2D zonaLuz;
+    private Transform playerLocal;
 
     public GameObject LightsFather;
     public NetworkVariable<bool> LightChecker = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
-    void Awake()
+    //--------------------------------------------- (trigger)
+    private void EncontrarPlayerLocal()
     {
-        Debug.Log("Awake");
+        if (playerLocal != null)
+            return;
+
+        foreach (NetworkObject player in FindObjectsByType<NetworkObject>(FindObjectsSortMode.None))
+        {
+            if (player.IsOwner && player.CompareTag("Player"))
+            {
+                playerLocal = player.transform; 
+                break;
+            }
+        }
     }
+    private void Zonas()
+    {
+        EncontrarPlayerLocal();
+        if (playerLocal == null || zonaLuz == null)
+            return;
+
+        bool DentroLuz = zonaLuz.bounds.Contains(playerLocal.position);
+
+        if (DentroLuz)
+        {
+            zonaAtual = "LuzMiniGame";
+        }
+
+        else if (!DentroLuz)
+        {
+            zonaAtual = "Nenhuma";
+        }
+    }
+
+    //--------------------------------------------- (Update)
+
+    private void Update()
+    {
+        Zonas();
+        if (!isHolding || zonaAtual == "Nenhuma") return;
+
+        currentHoldTime += Time.deltaTime;
+
+        if (currentHoldTime >= requiredHoldTime)
+        {
+            isHolding = false;
+            currentHoldTime = 0f;
+
+            if(zonaAtual == "LuzMiniGame")
+            {
+                TurnLightsOffRpc();
+            }
+        }
+    }
+
 
     //--------------------------------------------- (Network Spawn)
 
@@ -29,21 +86,17 @@ public class MinigameButton : NetworkBehaviour
 
     //--------------------------------------------- (funções de UI)
 
-    public void StartMinigame()
+    public void OnPointerDown(PointerEventData eventData)
     {
-        minigame.SetActive(true);
-        basic_ui.SetActive(false);
+        //if (!IsOwner) return;
+        isHolding = true;
     }
 
-    public void CloseMinigame()
+    public void OnPointerUp(PointerEventData eventData)
     {
-        basic_ui.SetActive(true); 
-        minigame.SetActive(false);
-    }
-
-    public void TurnLightsOff()
-    {
-        TurnLightsOffRpc();
+        //if (!IsOwner) return;
+        isHolding = false;
+        currentHoldTime = 0f;
     }
 
     //--------------------------------------------- (funções de netcoding)
