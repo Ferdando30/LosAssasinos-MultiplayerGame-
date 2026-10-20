@@ -1,6 +1,9 @@
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.EventSystems;
+using Microsoft.Unity.VisualStudio.Editor;
+using TMPro;
+using UnityEngine.UI;
 
 public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -12,14 +15,13 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
     public Collider2D zonaLuz;
     public Collider2D zonaPoison;
     private Transform playerLocal;
+    public UnityEngine.UI.Image buttonImage;
 
     public GameObject LightsFather;
     public SpriteRenderer Drink;
 
     public NetworkVariable<bool> LightChecker = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     public NetworkVariable<bool> PoisonChecker = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
-
-    
 
     //--------------------------------------------- (trigger)
     private void EncontrarPlayerLocal()
@@ -47,16 +49,19 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
 
         if (DentroLuz && !DentroPoison)
         {
+            buttonImage.enabled = true;
             zonaAtual = "LuzMiniGame";
         }
 
         else if(!DentroLuz && DentroPoison)
         {
+            buttonImage.enabled = true; 
             zonaAtual = "PoisonMiniGame";
         }
 
         else if (!DentroLuz && !DentroPoison)
         {
+            buttonImage.enabled = false; 
             zonaAtual = "Nenhuma";
         }
     }
@@ -66,7 +71,8 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
     private void Update()
     {
         Zonas();
-        if (!isHolding || zonaAtual == "Nenhuma") return;
+        if (!isHolding || zonaAtual == "Nenhuma")
+            return;
 
         currentHoldTime += Time.deltaTime;
 
