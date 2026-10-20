@@ -1435,7 +1435,6 @@ GameObject:
   - component: {fileID: 853222050}
   - component: {fileID: 853222049}
   - component: {fileID: 853222048}
-  - component: {fileID: 853222051}
   m_Layer: 0
   m_Name: PoisonMiniGame
   m_TagString: PoisonMiniGame
@@ -1563,42 +1562,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1153637774}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &853222051
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 853222047}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 2.305
 --- !u!1 &893085536
 GameObject:
   m_ObjectHideFlags: 0
@@ -2510,7 +2473,6 @@ MonoBehaviour:
   zonaLuz: {fileID: 1901118981}
   zonaPoison: {fileID: 853222048}
   buttonImage: {fileID: 1534239620}
-  buttonText: {fileID: 0}
   LightsFather: {fileID: 2138526909}
   Drink: {fileID: 853222049}
   LightChecker:
@@ -2916,7 +2878,6 @@ GameObject:
   - component: {fileID: 1901118983}
   - component: {fileID: 1901118982}
   - component: {fileID: 1901118981}
-  - component: {fileID: 1901118984}
   m_Layer: 0
   m_Name: LightMiniGame
   m_TagString: LuzMiniGame
@@ -3044,42 +3005,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1153637774}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &1901118984
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1901118980}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 2.305
 --- !u!1 &1945306458
 GameObject:
   m_ObjectHideFlags: 0
