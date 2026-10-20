@@ -107,13 +107,11 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        //if (!IsOwner) return;
         isHolding = true;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        //if (!IsOwner) return;
         isHolding = false;
         currentHoldTime = 0f;
     }
@@ -136,6 +134,7 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
         LightChecker.Value = true;
     }
 
+    [Rpc(SendTo.Server)]
     void PoisonDrinkRpc()
     {
         PoisonChecker.Value = true;
