@@ -1,9 +1,10 @@
-using UnityEngine;
-using Unity.Netcode;
-using UnityEngine.EventSystems;
 using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
+using Unity.Netcode;
+using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -11,14 +12,16 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
     private float currentHoldTime = 0f;
     private bool isHolding = false;
 
-    public string zonaAtual = "Nenhuma";
-    public Collider2D zonaLuz;
-    public Collider2D zonaPoison;
+    public string currentZone = "Nenhuma";
+    public Collider2D lightZone;
+    public Collider2D poisonZone;
     private Transform playerLocal;
     public UnityEngine.UI.Image buttonImage;
 
     public GameObject LightsFather;
     public SpriteRenderer Drink;
+
+    public UnityEngine.UI.Slider timeSlider;
 
     public NetworkVariable<bool> LightChecker = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     public NetworkVariable<bool> PoisonChecker = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
@@ -41,28 +44,31 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
     private void Zonas()
     {
         EncontrarPlayerLocal();
-        if (playerLocal == null || zonaLuz == null || zonaPoison == null)
+        if (playerLocal == null || lightZone == null || poisonZone == null)
             return;
 
-        bool DentroLuz = zonaLuz.bounds.Contains(playerLocal.position);
-        bool DentroPoison = zonaPoison.bounds.Contains(playerLocal.position);
+        bool DentroLuz = lightZone.bounds.Contains(playerLocal.position);
+        bool DentroPoison = poisonZone.bounds.Contains(playerLocal.position);
 
         if (DentroLuz && !DentroPoison)
         {
             buttonImage.enabled = true;
-            zonaAtual = "LuzMiniGame";
+            timeSlider.gameObject.SetActive(true);
+            currentZone = "LuzMiniGame";
         }
 
         else if(!DentroLuz && DentroPoison)
         {
-            buttonImage.enabled = true; 
-            zonaAtual = "PoisonMiniGame";
+            buttonImage.enabled = true;
+            timeSlider.gameObject.SetActive(true);
+            currentZone = "PoisonMiniGame";
         }
 
         else if (!DentroLuz && !DentroPoison)
         {
-            buttonImage.enabled = false; 
-            zonaAtual = "Nenhuma";
+            buttonImage.enabled = false;
+            timeSlider.gameObject.SetActive(false);
+            currentZone = "Nenhuma";
         }
     }
 
@@ -71,22 +77,25 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
     private void Update()
     {
         Zonas();
-        if (!isHolding || zonaAtual == "Nenhuma")
+        if (!isHolding || currentZone == "Nenhuma")
             return;
+        
 
         currentHoldTime += Time.deltaTime;
+        timeSlider.value = Mathf.Lerp(1f, 0f, currentHoldTime / requiredHoldTime);
 
         if (currentHoldTime >= requiredHoldTime)
         {
             isHolding = false;
             currentHoldTime = 0f;
+            timeSlider.value = 1f;
 
-            if(zonaAtual == "LuzMiniGame")
+            if(currentZone == "LuzMiniGame")
             {
                 TurnLightsOffRpc();
             }
 
-            else if(zonaAtual == "PoisonMiniGame")
+            else if(currentZone == "PoisonMiniGame")
             {
                 PoisonDrinkRpc();
             }
