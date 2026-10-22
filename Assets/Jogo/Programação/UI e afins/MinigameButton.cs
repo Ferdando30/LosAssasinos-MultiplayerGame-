@@ -23,6 +23,8 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
 
     public UnityEngine.UI.Slider timeSlider;
 
+    private Animator animator;
+
     public NetworkVariable<bool> LightChecker = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     public NetworkVariable<bool> PoisonChecker = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
@@ -37,6 +39,7 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
             if (player.IsOwner && player.CompareTag("Player"))
             {
                 playerLocal = player.transform; 
+                animator = player.GetComponent<Animator>();
                 break;
             }
         }
@@ -83,10 +86,12 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
 
         currentHoldTime += Time.deltaTime;
         timeSlider.value = Mathf.Lerp(1f, 0f, currentHoldTime / requiredHoldTime);
+        animator.SetBool("Interacting", true);
 
         if (currentHoldTime >= requiredHoldTime)
         {
             isHolding = false;
+            animator.SetBool("Interacting", false);
             currentHoldTime = 0f;
             timeSlider.value = 1f;
 

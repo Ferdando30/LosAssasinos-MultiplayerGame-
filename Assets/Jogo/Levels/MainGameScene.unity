@@ -2588,6 +2588,7 @@ MonoBehaviour:
   LightsFather: {fileID: 2138526909}
   Drink: {fileID: 853222049}
   timeSlider: {fileID: 1840993163}
+  animator: {fileID: -5869306402659513726, guid: 4f17f7cb62ee69648a0ea4e94e4b6cda, type: 3}
   LightChecker:
     UpdateTraits:
       MinSecondsBetweenUpdates: 0
