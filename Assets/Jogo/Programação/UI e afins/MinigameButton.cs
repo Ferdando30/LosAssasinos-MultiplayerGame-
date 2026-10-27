@@ -12,22 +12,31 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
     private float currentHoldTime = 0f;
     private bool isHolding = false;
 
+    [Header("Colliders")]
     public string currentZone = "Nenhuma";
     public Collider2D lightZone;
     public Collider2D poisonZone;
     public Collider2D closetZone;
     private Transform playerLocal;
-    public UnityEngine.UI.Image buttonImage;
+    
 
+    [Header("Tasks")]
     public GameObject LightsFather;
     public SpriteRenderer Drink;
 
+    [Header("UI")]
     public UnityEngine.UI.Slider timeSlider;
+    public UnityEngine.UI.Image buttonImage;
 
     private Animator animator;
 
+    
     public NetworkVariable<bool> LightChecker = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     public NetworkVariable<bool> PoisonChecker = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+
+    [Header("Sprites")]
+    public Sprite NormalDrink;
+    public Sprite PoisonDrink;
 
     //--------------------------------------------- (trigger)
     private void EncontrarPlayerLocal()
@@ -158,7 +167,7 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
 
     private void OnPoisonChange(bool previousValue, bool newValue)
     {
-        Drink.color = Color.green;
+        Drink.sprite = PoisonDrink;
     }
 
     [Rpc(SendTo.Server)]
