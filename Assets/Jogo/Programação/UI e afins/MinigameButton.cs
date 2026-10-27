@@ -15,6 +15,7 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
     public string currentZone = "Nenhuma";
     public Collider2D lightZone;
     public Collider2D poisonZone;
+    public Collider2D closetZone;
     private Transform playerLocal;
     public UnityEngine.UI.Image buttonImage;
 
@@ -47,11 +48,12 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
     private void Zonas()
     {
         EncontrarPlayerLocal();
-        if (playerLocal == null || lightZone == null || poisonZone == null)
+        if (playerLocal == null || lightZone == null || poisonZone == null || closetZone == null)
             return;
 
         bool DentroLuz = lightZone.bounds.Contains(playerLocal.position);
         bool DentroPoison = poisonZone.bounds.Contains(playerLocal.position);
+        bool DentroArmario = closetZone.bounds.Contains(playerLocal.position);
 
         if (DentroLuz && !DentroPoison)
         {
@@ -65,6 +67,13 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
             buttonImage.enabled = true;
             timeSlider.gameObject.SetActive(true);
             currentZone = "PoisonMiniGame";
+        }
+
+        else if (DentroArmario && !DentroLuz && !DentroPoison)
+        {
+            buttonImage.enabled = true;
+            timeSlider.gameObject.SetActive(true);
+            currentZone = "ArmarioMiniGame";
         }
 
         else if (!DentroLuz && !DentroPoison)
@@ -103,6 +112,10 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
             else if(currentZone == "PoisonMiniGame")
             {
                 PoisonDrinkRpc();
+            }
+            else if (currentZone == "ArmarioMiniGame")
+            {
+                return;
             }
         }
     }
