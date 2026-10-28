@@ -6,6 +6,7 @@ TagManager:
   tags:
   - LuzMiniGame
   - PoisonMiniGame
+  - PlayerKillBox
   layers:
   - Default
   - TransparentFX
