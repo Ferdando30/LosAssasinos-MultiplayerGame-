@@ -10,8 +10,9 @@ public class KillOtherPlayer : NetworkBehaviour
 
     private Animator animator;
     private Transform playerLocal;
-    private List <Collider2D> PlayerKillCollider = new List<Collider2D>();
-    private NetworkObject playerAlvo;
+    private List<Collider2D> PlayerKillCollider = new List<Collider2D>();
+    private NetworkObject playerTarget;
+  
 
     private void EncontrarPlayerLocal()
     {
@@ -33,14 +34,14 @@ public class KillOtherPlayer : NetworkBehaviour
     {
         PlayerKillCollider.Clear();
 
-        foreach(NetworkObject player in FindObjectsByType<NetworkObject>(FindObjectsSortMode.None))
+        foreach (NetworkObject player in FindObjectsByType<NetworkObject>(FindObjectsSortMode.None))
         {
             if (player.IsOwner)
             {
                 continue;
             }
 
-            foreach(Collider2D hitbox in player.GetComponentsInChildren<Collider2D>(true))
+            foreach (Collider2D hitbox in player.GetComponentsInChildren<Collider2D>(true))
             {
                 if (hitbox.CompareTag("PlayerKillBox"))
                 {
@@ -60,11 +61,11 @@ public class KillOtherPlayer : NetworkBehaviour
 
         bool InsidePlayerKillBox = false;
 
-        if(playerLocal != null)
+        if (playerLocal != null)
         {
-            foreach(Collider2D hitbox in PlayerKillCollider)
+            foreach (Collider2D hitbox in PlayerKillCollider)
             {
-                if(hitbox == null || !hitbox.enabled || !hitbox.gameObject.activeInHierarchy)
+                if (hitbox == null || !hitbox.enabled || !hitbox.gameObject.activeInHierarchy)
                 {
                     continue;
                 }
@@ -72,7 +73,7 @@ public class KillOtherPlayer : NetworkBehaviour
                 if (hitbox.OverlapPoint(playerLocal.position))
                 {
                     InsidePlayerKillBox = true;
-                    playerAlvo = hitbox.GetComponentInParent<NetworkObject>();
+                    playerTarget = hitbox.GetComponentInParent<NetworkObject>();
                     break;
                 }
             }
@@ -83,11 +84,28 @@ public class KillOtherPlayer : NetworkBehaviour
 
     public void killOtherPlayer()
     {
-        Debug.Log("Matou:" + playerAlvo.NetworkObjectId);
+        Debug.Log("Matou:" + playerTarget.NetworkObjectId);
+        freezePlayerServerRpc(playerTarget.NetworkObjectId);
     }
 
     private void Update()
     {
         EnterKillZone();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void freezePlayerServerRpc(ulong targetId)
+    {
+        if (NetworkManager.SpawnManager.SpawnedObjects.TryGetValue(targetId, out NetworkObject target))
+        {
+            Rigidbody2D rb = target.GetComponent<Rigidbody2D>();
+
+            if (rb != null)
+            {
+                rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+
+                rb.freezeRotation = true;
+            }
+        }
     }
 }
