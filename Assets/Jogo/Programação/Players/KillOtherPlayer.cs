@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class KillOtherPlayer : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class KillOtherPlayer : MonoBehaviour
 
     private Animator animator;
     private Transform playerLocal;
-    private Collider2D PlayerKillCollider;
+    private List <Collider2D> PlayerKillCollider = new List<Collider2D>();
 
     private void EncontrarPlayerLocal()
     {
@@ -29,22 +30,21 @@ public class KillOtherPlayer : MonoBehaviour
 
     private void EncontrarHitboxOutroPlayer()
     {
-        if (PlayerKillCollider != null)
-            return;
+        PlayerKillCollider.Clear();
 
-        foreach (NetworkObject player in
-            FindObjectsByType<NetworkObject>(FindObjectsSortMode.None))
+        foreach(NetworkObject player in FindObjectsByType<NetworkObject>(FindObjectsSortMode.None))
         {
             if (player.IsOwner)
+            {
                 continue;
+            }
 
-            foreach (Collider2D hitbox in
-                player.GetComponentsInChildren<Collider2D>(true))
+            foreach(Collider2D hitbox in player.GetComponentsInChildren<Collider2D>(true))
             {
                 if (hitbox.CompareTag("PlayerKillBox"))
                 {
-                    PlayerKillCollider = hitbox;
-                    return;
+                    PlayerKillCollider.Add(hitbox);
+                    break;
                 }
             }
         }
@@ -57,17 +57,25 @@ public class KillOtherPlayer : MonoBehaviour
         if (playerLocal == null || PlayerKillCollider == null)
             return;
 
-        bool InsideOtherPlayer = PlayerKillCollider.bounds.Contains(playerLocal.position);
+        bool InsidePlayerKillBox = false;
 
-        if (InsideOtherPlayer)
+        if(playerLocal != null)
         {
-            KillBtnImage.enabled = true;
+            foreach(Collider2D hitbox in PlayerKillCollider)
+            {
+                if(hitbox == null || !hitbox.enabled || !hitbox.gameObject.activeInHierarchy)
+                {
+                    continue;
+                }
+
+                if (hitbox.OverlapPoint(playerLocal.position))
+                {
+                    InsidePlayerKillBox = true;
+                }
+            }
         }
 
-        else if (!InsideOtherPlayer)
-        {
-            KillBtnImage.enabled = false;
-        }
+        KillBtnImage.enabled = InsidePlayerKillBox;
     }
 
     public void killOtherPlayer()
