@@ -3,7 +3,7 @@ using Unity.Netcode;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class KillOtherPlayer : MonoBehaviour
+public class KillOtherPlayer : NetworkBehaviour
 {
     [Header("Imagem do botão")]
     public Image KillBtnImage;
@@ -11,6 +11,7 @@ public class KillOtherPlayer : MonoBehaviour
     private Animator animator;
     private Transform playerLocal;
     private List <Collider2D> PlayerKillCollider = new List<Collider2D>();
+    private NetworkObject playerAlvo;
 
     private void EncontrarPlayerLocal()
     {
@@ -71,6 +72,8 @@ public class KillOtherPlayer : MonoBehaviour
                 if (hitbox.OverlapPoint(playerLocal.position))
                 {
                     InsidePlayerKillBox = true;
+                    playerAlvo = hitbox.GetComponentInParent<NetworkObject>();
+                    break;
                 }
             }
         }
@@ -80,7 +83,7 @@ public class KillOtherPlayer : MonoBehaviour
 
     public void killOtherPlayer()
     {
-        Debug.Log("Matou");
+        Debug.Log("Matou:" + playerAlvo.NetworkObjectId);
     }
 
     private void Update()
