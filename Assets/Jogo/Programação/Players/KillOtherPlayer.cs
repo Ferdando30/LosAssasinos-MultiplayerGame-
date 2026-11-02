@@ -10,11 +10,13 @@ public class KillOtherPlayer : NetworkBehaviour
 
     private Animator animator;
     private Transform playerLocal;
+
     private List<Collider2D> PlayerKillCollider = new List<Collider2D>();
+
     private Rigidbody2D rbTarget;
     private NetworkObject playerTarget;
 
-    public NetworkVariable<bool> RbChecker = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    //public NetworkVariable<bool> RbChecker = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
     private void EncontrarPlayerLocal()
     {
@@ -76,7 +78,8 @@ public class KillOtherPlayer : NetworkBehaviour
                 {
                     InsidePlayerKillBox = true;
                     playerTarget = hitbox.GetComponentInParent<NetworkObject>();
-                    rbTarget = playerTarget.GetComponent<Rigidbody2D>();
+                    if (playerTarget != null)
+                        rbTarget = playerTarget.GetComponent<Rigidbody2D>();
                     break;
                 }
             }
@@ -88,7 +91,8 @@ public class KillOtherPlayer : NetworkBehaviour
     public void killOtherPlayer()
     {
         Debug.Log("Matou:" + playerTarget.NetworkObjectId);
-        freezePlayerRpc();
+        FreezeTargetRpc(new NetworkObjectReference(playerTarget));
+        
     }
 
     private void Update()
@@ -96,27 +100,20 @@ public class KillOtherPlayer : NetworkBehaviour
         EnterKillZone();
     }
 
-    private void FreezePlayerChecker(bool previousValue, bool newValue)
-    {
-        rbTarget.constraints = RigidbodyConstraints2D.FreezePositionX |
-                       RigidbodyConstraints2D.FreezePositionY |
-                       RigidbodyConstraints2D.FreezeRotation;
-        Debug.Log("Congelou");
-    }
-
-    public override void OnNetworkSpawn()
-    {
-        RbChecker.OnValueChanged += FreezePlayerChecker;
-    }
-
-    public override void OnNetworkDespawn()
-    {
-        RbChecker.OnValueChanged -= FreezePlayerChecker;
-    }
 
     [Rpc(SendTo.Server)]
-    private void freezePlayerRpc()
+    private void FreezeTargetRpc(NetworkObjectReference targetReference)
     {
-        RbChecker.Value = true;
+        if (!targetReference.TryGet(out NetworkObject target))
+            return;
+
+        PlayerFreeze freeze = target.GetComponent<PlayerFreeze>();
+
+        if (freeze == null)
+            return;
+
+        Debug.Log("Servidor congelando: " + target.NetworkObjectId);
+
+        freeze.SetFrozenServer(true);
     }
 }
