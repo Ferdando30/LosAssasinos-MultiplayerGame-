@@ -1,13 +1,9 @@
-
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.InputSystem.OnScreen;
 
 public class PlayerFreeze : NetworkBehaviour
 {
-    private Rigidbody2D rb;
-
-    private RigidbodyConstraints2D originalConstraints;
-
     [Header("Alvo da câmera")]
     [SerializeField] private Transform cameraFollowTarget;
 
@@ -15,6 +11,7 @@ public class PlayerFreeze : NetworkBehaviour
         cameraFollowTarget != null ? cameraFollowTarget : transform;
 
     private SpectatorCameraController cameraController;
+    private OnScreenStick joystick;
 
     private NetworkVariable<bool> IsFrozen = new NetworkVariable<bool>(
         false,
@@ -29,22 +26,20 @@ public class PlayerFreeze : NetworkBehaviour
             NetworkVariableWritePermission.Server
         );
 
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        originalConstraints = rb.constraints;
-    }
-
     public override void OnNetworkSpawn()
     {
         IsFrozen.OnValueChanged += FreezePlayerChecker;
         FrozenBy.OnValueChanged += OnFrozenByChanged;
 
-        cameraController =
-           FindFirstObjectByType<SpectatorCameraController>();
+        if (IsOwner)
+        {
+            cameraController =
+                FindFirstObjectByType<SpectatorCameraController>();
 
-        ApplyFreeze(IsFrozen.Value);
-        AtualizarCameraEspectador();
+            joystick = FindFirstObjectByType<OnScreenStick>();
+
+            AtualizarCameraEspectador();
+        }
     }
 
     public override void OnNetworkDespawn()
@@ -55,30 +50,16 @@ public class PlayerFreeze : NetworkBehaviour
 
     private void FreezePlayerChecker(bool previousValue, bool newValue)
     {
-        ApplyFreeze(newValue);
         AtualizarCameraEspectador();
     }
 
-    private void OnFrozenByChanged(NetworkObjectReference previousValue, NetworkObjectReference newValue)
+    private void OnFrozenByChanged(
+        NetworkObjectReference previousValue,
+        NetworkObjectReference newValue)
     {
         AtualizarCameraEspectador();
     }
 
-    private void ApplyFreeze(bool frozen)
-    {
-        if (frozen)
-        {
-            rb.constraints = RigidbodyConstraints2D.FreezePositionX |
-                             RigidbodyConstraints2D.FreezePositionY |
-                             RigidbodyConstraints2D.FreezeRotation;
-        }
-        else
-        {
-            rb.constraints = originalConstraints;
-        }
-    }
-
-    // Chamado pelo servidor.
     public void SetFrozenServer(bool frozen, NetworkObject attacker)
     {
         if (!IsServer)
@@ -102,16 +83,18 @@ public class PlayerFreeze : NetworkBehaviour
             return;
 
         if (cameraController == null)
-        {
             cameraController =
                 FindFirstObjectByType<SpectatorCameraController>();
-        }
 
-        if (cameraController == null)
-            return;
+        if (joystick == null)
+            joystick = FindFirstObjectByType<OnScreenStick>();
 
         if (IsFrozen.Value)
         {
+            // Esconde o joystick apenas neste cliente
+            if (joystick != null)
+                joystick.gameObject.SetActive(false);
+
             if (FrozenBy.Value.TryGet(out NetworkObject attacker))
             {
                 PlayerFreeze attackerFreeze =
@@ -121,14 +104,10 @@ public class PlayerFreeze : NetworkBehaviour
                     ? attackerFreeze.CameraTarget
                     : attacker.transform;
 
-                cameraController.SetTarget(target);
+                if (cameraController != null)
+                    cameraController.SetTarget(target);
             }
         }
-        else
-        {
-            cameraController.SetTarget(CameraTarget);
-        }
+       
     }
 }
-
-
