@@ -90,9 +90,20 @@ public class KillOtherPlayer : NetworkBehaviour
 
     public void killOtherPlayer()
     {
-        Debug.Log("Matou:" + playerTarget.NetworkObjectId);
-        FreezeTargetRpc(new NetworkObjectReference(playerTarget));
-        
+        if (playerTarget == null || playerLocal == null)
+            return;
+
+        NetworkObject attacker =
+            playerLocal.GetComponent<NetworkObject>();
+
+        if (attacker == null)
+            return;
+
+        FreezeTargetRpc(
+            new NetworkObjectReference(playerTarget),
+            new NetworkObjectReference(attacker)
+        );
+
     }
 
     private void Update()
@@ -102,9 +113,14 @@ public class KillOtherPlayer : NetworkBehaviour
 
 
     [Rpc(SendTo.Server)]
-    private void FreezeTargetRpc(NetworkObjectReference targetReference)
+    private void FreezeTargetRpc(
+    NetworkObjectReference targetReference,
+    NetworkObjectReference attackerReference)
     {
         if (!targetReference.TryGet(out NetworkObject target))
+            return;
+
+        if (!attackerReference.TryGet(out NetworkObject attacker))
             return;
 
         PlayerFreeze freeze = target.GetComponent<PlayerFreeze>();
@@ -112,8 +128,6 @@ public class KillOtherPlayer : NetworkBehaviour
         if (freeze == null)
             return;
 
-        Debug.Log("Servidor congelando: " + target.NetworkObjectId);
-
-        freeze.SetFrozenServer(true);
+        freeze.SetFrozenServer(true, attacker);
     }
 }

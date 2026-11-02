@@ -1423,6 +1423,7 @@ GameObject:
   - component: {fileID: 683010800}
   - component: {fileID: 683010799}
   - component: {fileID: 683010798}
+  - component: {fileID: 683010801}
   m_Layer: 0
   m_Name: Virtual Camera
   m_TagString: Untagged
@@ -1497,6 +1498,19 @@ Transform:
   - {fileID: 671388115}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &683010801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683010797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28f791fed3326714cb35d62aae044661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpectatorCameraController
+  virtualCamera: {fileID: 683010799}
 --- !u!1 &758838109
 GameObject:
   m_ObjectHideFlags: 0
@@ -9998,6 +10012,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb829c65d8a5bf4e90b7bdbccaa7685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KillOtherPlayer
+  ShowTopMostFoldoutHeaderGroup: 1
   KillBtnImage: {fileID: 2016535238}
 --- !u!114 &2016535237
 MonoBehaviour:
