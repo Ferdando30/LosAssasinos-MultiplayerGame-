@@ -1,6 +1,7 @@
+using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Unity.Netcode;
 
 
 public class TopDownController : NetworkBehaviour
@@ -9,7 +10,8 @@ public class TopDownController : NetworkBehaviour
     public float walk_speed;
     public Animator animator;
     public SpriteRenderer spriteRenderer;
-    
+    public List<RuntimeAnimatorController> sprites;
+
 
     Vector2 keyboard_direction;
     private bool AtualFlipX;
@@ -69,5 +71,10 @@ public class TopDownController : NetworkBehaviour
     {
         spriteRenderer.flipX = flipX;
         AtualFlipX = flipX;
+    }
+
+    public void RandomSkin()
+    {
+        animator.runtimeAnimatorController = sprites[Random.Range(0, sprites.Count)];
     }
 }

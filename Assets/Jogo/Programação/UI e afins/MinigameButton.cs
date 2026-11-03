@@ -29,6 +29,7 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
     public UnityEngine.UI.Image buttonImage;
 
     private Animator animator;
+    private TopDownController playerController;
 
     
     public NetworkVariable<bool> LightChecker = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
@@ -50,6 +51,7 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
             {
                 playerLocal = player.transform; 
                 animator = player.GetComponent<Animator>();
+                playerController = player.GetComponent<TopDownController>();
                 break;
             }
         }
@@ -124,7 +126,7 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
             }
             else if (currentZone == "ArmarioMiniGame")
             {
-                return;
+                playerController.RandomSkin();
             }
         }
     }
