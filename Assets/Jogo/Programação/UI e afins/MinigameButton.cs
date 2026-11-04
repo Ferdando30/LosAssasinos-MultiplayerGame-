@@ -1,10 +1,7 @@
-using Microsoft.Unity.VisualStudio.Editor;
-using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
+
 
 public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -17,12 +14,20 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
     public Collider2D lightZone;
     public Collider2D poisonZone;
     public Collider2D closetZone;
+    public Collider2D phoneZone;
+    public Collider2D alarmZone;
+    public Collider2D stealKnifeZone;
     private Transform playerLocal;
     
 
     [Header("Tasks")]
     public GameObject LightsFather;
+    public GameObject AlarmLight;
+    public SpriteRenderer Lights;
     public SpriteRenderer Drink;
+    public SpriteRenderer Phone;
+    public SpriteRenderer Alarm;
+    public SpriteRenderer stealKnife;
 
     [Header("UI")]
     public UnityEngine.UI.Slider timeSlider;
@@ -34,10 +39,21 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
     
     public NetworkVariable<bool> LightChecker = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     public NetworkVariable<bool> PoisonChecker = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    public NetworkVariable<bool> PhoneChecker = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    public NetworkVariable<bool> AlarmChecker = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    public NetworkVariable<bool> StealKnifeChecker = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
     [Header("Sprites")]
     public Sprite NormalDrink;
     public Sprite PoisonDrink;
+    public Sprite NormalPhone;
+    public Sprite BrokenPhone;
+    public Sprite AlarmOn;
+    public Sprite AlarmOff;
+    public Sprite KnifemOn;
+    public Sprite KnifeOff;
+    public Sprite LightsOn;
+    public Sprite LightsOff;
 
     //--------------------------------------------- (trigger)
     private void EncontrarPlayerLocal()
@@ -65,29 +81,53 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
         bool DentroLuz = lightZone.bounds.Contains(playerLocal.position);
         bool DentroPoison = poisonZone.bounds.Contains(playerLocal.position);
         bool DentroArmario = closetZone.bounds.Contains(playerLocal.position);
+        bool DentroPhone = phoneZone.bounds.Contains(playerLocal.position);
+        bool DentroAlarm = alarmZone.bounds.Contains(playerLocal.position);
+        bool DentroKnifeSteal = stealKnifeZone.bounds.Contains(playerLocal.position);
 
-        if (DentroLuz && !DentroPoison)
+        if (DentroLuz && !DentroPoison && !DentroArmario)
         {
             buttonImage.enabled = true;
             timeSlider.gameObject.SetActive(true);
             currentZone = "LuzMiniGame";
         }
 
-        else if(!DentroLuz && DentroPoison)
+        else if(!DentroLuz && DentroPoison && !DentroArmario && !DentroPhone)
         {
             buttonImage.enabled = true;
             timeSlider.gameObject.SetActive(true);
             currentZone = "PoisonMiniGame";
         }
 
-        else if (DentroArmario && !DentroLuz && !DentroPoison)
+        else if (DentroArmario && !DentroLuz && !DentroPoison && !DentroPhone)
         {
             buttonImage.enabled = true;
             timeSlider.gameObject.SetActive(true);
             currentZone = "ArmarioMiniGame";
         }
 
-        else if (!DentroLuz && !DentroPoison)
+        else if (DentroPhone && !DentroArmario && !DentroLuz && !DentroPoison)
+        {
+            buttonImage.enabled = true;
+            timeSlider.gameObject.SetActive(true);
+            currentZone = "PhoneMiniGame";
+        }
+
+        else if (DentroAlarm && !DentroPhone && !DentroArmario && !DentroLuz && !DentroPoison)
+        {
+            buttonImage.enabled = true;
+            timeSlider.gameObject.SetActive(true);
+            currentZone = "AlarmMiniGame";
+        }
+
+        else if (DentroKnifeSteal && !DentroAlarm && !DentroPhone && !DentroArmario && !DentroLuz && !DentroPoison)
+        {
+            buttonImage.enabled = true;
+            timeSlider.gameObject.SetActive(true);
+            currentZone = "StealKnifeMiniGame";
+        }
+
+        else if (!DentroLuz && !DentroPoison && !DentroArmario && !DentroPhone && !DentroAlarm && !DentroKnifeSteal)
         {
             buttonImage.enabled = false;
             timeSlider.gameObject.SetActive(false);
@@ -128,6 +168,18 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
             {
                 playerController.RandomSkin();
             }
+            else if (currentZone == "PhoneMiniGame")
+            {
+                PhoneBreakRpc();
+            }
+            else if (currentZone == "AlarmMiniGame")
+            {
+                AlarmOffRpc();
+            }
+            else if (currentZone == "StealKnifeMiniGame")
+            {
+                KnifeOffRpc();
+            }
         }
     }
 
@@ -139,12 +191,19 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
         Debug.Log("Spawn");
         LightChecker.OnValueChanged += OnLightChange;
         PoisonChecker.OnValueChanged += OnPoisonChange;
+        PhoneChecker.OnValueChanged += OnPhoneChange;
+        AlarmChecker.OnValueChanged += OnAlarmChange;
+        StealKnifeChecker.OnValueChanged += OnStealKnifeChange;
     }
 
     public override void OnNetworkDespawn()
     {
         LightChecker.OnValueChanged -= OnLightChange;
         PoisonChecker.OnValueChanged -= OnPoisonChange;
+        PhoneChecker.OnValueChanged -= OnPhoneChange;
+        AlarmChecker.OnValueChanged-= OnAlarmChange;
+        StealKnifeChecker.OnValueChanged -= OnStealKnifeChange;
+
     }
 
     //--------------------------------------------- (funções de UI)
@@ -165,11 +224,27 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
     private void OnLightChange(bool previousValue, bool newValue)
     {
         LightsFather.SetActive(false);
+        Lights.sprite = LightsOff;
     }
 
     private void OnPoisonChange(bool previousValue, bool newValue)
     {
         Drink.sprite = PoisonDrink;
+    }
+
+    private void OnPhoneChange(bool previousValue, bool newValue)
+    {
+        Phone.sprite = BrokenPhone;
+    }
+
+    private void OnAlarmChange(bool previousValue, bool newValue)
+    {
+        Alarm.sprite = AlarmOff;
+        AlarmLight.SetActive(false);
+    }
+    private void OnStealKnifeChange(bool previousValue, bool newValue)
+    {
+        stealKnife.sprite = KnifeOff;
     }
 
     [Rpc(SendTo.Server)]
@@ -182,5 +257,23 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
     void PoisonDrinkRpc()
     {
         PoisonChecker.Value = true;
+    }
+
+    [Rpc(SendTo.Server)]
+    void PhoneBreakRpc()
+    {
+        PhoneChecker.Value = true;
+    }
+
+    [Rpc(SendTo.Server)]
+    void AlarmOffRpc()
+    {
+        AlarmChecker.Value = true;
+    }
+
+    [Rpc(SendTo.Server)]
+    void KnifeOffRpc()
+    {
+        StealKnifeChecker.Value = true;
     }
 }
