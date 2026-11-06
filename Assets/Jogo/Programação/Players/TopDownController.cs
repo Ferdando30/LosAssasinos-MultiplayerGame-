@@ -75,6 +75,8 @@ public class TopDownController : NetworkBehaviour
 
     public void RandomSkin()
     {
-        animator.runtimeAnimatorController = sprites[Random.Range(0, sprites.Count)];
+        List<RuntimeAnimatorController> skins = sprites.FindAll(skin => skin != animator.runtimeAnimatorController);
+
+        animator.runtimeAnimatorController = skins[Random.Range(0, skins.Count)];
     }
 }
