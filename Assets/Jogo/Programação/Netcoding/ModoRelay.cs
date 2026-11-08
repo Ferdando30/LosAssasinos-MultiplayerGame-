@@ -3,51 +3,40 @@ using Unity.Services.Authentication;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using Unity.Services.Core;
-using UnityEngine.UIElements;
+using TMPro;
+using UnityEngine.UI;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
 
 public class ModoRelay : MonoBehaviour
 {
-    private Button HostBtn;
-    private Button ClientBtn;
-    private Button CriarBtn;
-    private Button EntrarBtn;
+    public GameObject InicioHolder;
+    public GameObject HostScreen;
+    public GameObject EntrarScreen;
+    public GameObject LobbyScreen;
+    public GameObject StartScreen;
 
-    private VisualElement telaServers;
-    private VisualElement telaCriar;
-    private VisualElement telaEntrar;
-    private VisualElement LobbyScreen;
-    private VisualElement StartScreen;
+    public TextMeshProUGUI CodeTxt;
+    public TMP_InputField joinInput;
 
-    private Label CodeTxt;
+    public Button Hostbtn;
+    public Button JoinBtn;
+
 
     async void Start()
     {
-        VisualElement root = GetComponent<UIDocument>().rootVisualElement;
-
-        HostBtn = root.Q<Button>("HostBtn");
-        ClientBtn = root.Q<Button>("ClientBtn");
-        CriarBtn = root.Q<Button>("CriarBtn");
-        EntrarBtn = root.Q<Button>("EntrarBtn");
-
-        telaServers = root.Q<VisualElement>("TelaInicial");
-        telaCriar = root.Q<VisualElement>("TelaHostServer");
-        telaEntrar = root.Q<VisualElement>("TelaEnterServer");
-        LobbyScreen = root.Q<VisualElement>("LobbyScreen");
-        StartScreen = root.Q<VisualElement>("StartScreen");
-        CodeTxt = root.Q<Label>("CodeTxt");
-
-        telaServers.visible = true;
-        telaCriar.visible = false;
-        telaEntrar.visible = false;
-
-        CriarBtn.RegisterCallback<ClickEvent>(CriarSalaTela);
-        EntrarBtn.RegisterCallback<ClickEvent>(EntrarSalaTela);
+        InicioHolder.SetActive(true);
+        HostScreen.SetActive(false);
+        EntrarScreen.SetActive(false);
+        LobbyScreen.SetActive(false);
+        StartScreen.SetActive(true);
 
         await UnityServices.InitializeAsync();
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
+
+        Hostbtn.onClick.AddListener(CreatRelay);
+        JoinBtn.onClick.AddListener(() => JoinRelay(joinInput.text));
     }
 
     async void CreatRelay()
@@ -55,6 +44,9 @@ public class ModoRelay : MonoBehaviour
         Allocation allocation = await RelayService.Instance.CreateAllocationAsync(3);
         string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
         CodeTxt.text = "Code: " + joinCode;
+
+        LobbyScreen.SetActive(true);
+        StartScreen.SetActive(false);
 
         var relayServerData = AllocationUtils.ToRelayServerData(allocation, "dtls");
 
@@ -67,21 +59,26 @@ public class ModoRelay : MonoBehaviour
         var joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
         var relayServerData = AllocationUtils.ToRelayServerData(joinAllocation, "dtls");
 
+        LobbyScreen.SetActive(true);
+        StartScreen.SetActive(false);
+
         NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
         NetworkManager.Singleton.StartClient();
     }
 
-    private void CriarSalaTela(ClickEvent clickEvent)
+    public void CriarSalaTela()
     {
-        telaServers.visible = false;
-        telaCriar.visible = true;
-        telaEntrar.visible = false;
+        InicioHolder.SetActive(false);
+        HostScreen.SetActive(true);
+        EntrarScreen.SetActive(false);
+        LobbyScreen.SetActive(false);
     }
 
-    private void EntrarSalaTela(ClickEvent clickEvent)
+    public void EntrarSalaTela()
     {
-        telaServers.visible = false;
-        telaCriar.visible = false;
-        telaEntrar.visible = true;
+        InicioHolder.SetActive(false);
+        HostScreen.SetActive(false);
+        EntrarScreen.SetActive(true);
+        LobbyScreen.SetActive(false);
     }
 }
