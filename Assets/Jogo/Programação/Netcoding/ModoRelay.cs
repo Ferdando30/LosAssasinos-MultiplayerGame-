@@ -16,6 +16,7 @@ public class ModoRelay : MonoBehaviour
     public GameObject EntrarScreen;
     public GameObject LobbyScreen;
     public GameObject StartScreen;
+    public GameObject JoyStick;
 
     public TextMeshProUGUI CodeTxt;
     public TMP_InputField joinInput;
@@ -31,6 +32,7 @@ public class ModoRelay : MonoBehaviour
         EntrarScreen.SetActive(false);
         LobbyScreen.SetActive(false);
         StartScreen.SetActive(true);
+        JoyStick.SetActive(false);
 
         await UnityServices.InitializeAsync();
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
@@ -46,6 +48,7 @@ public class ModoRelay : MonoBehaviour
         CodeTxt.text = "Code: " + joinCode;
 
         LobbyScreen.SetActive(true);
+        JoyStick.SetActive(true);
         StartScreen.SetActive(false);
 
         var relayServerData = AllocationUtils.ToRelayServerData(allocation, "dtls");
@@ -59,8 +62,8 @@ public class ModoRelay : MonoBehaviour
         var joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
         var relayServerData = AllocationUtils.ToRelayServerData(joinAllocation, "dtls");
 
-        LobbyScreen.SetActive(true);
         StartScreen.SetActive(false);
+        JoyStick.SetActive(true);
 
         NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
         NetworkManager.Singleton.StartClient();
