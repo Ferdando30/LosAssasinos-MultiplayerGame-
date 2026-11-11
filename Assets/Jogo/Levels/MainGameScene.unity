@@ -10246,7 +10246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 969a0f138c1320f4b86f4901ce0b69d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  body: {fileID: 0}
+  body: {fileID: 1782160334}
   walkSpeed: 0
   animator: {fileID: 1782160328}
   spriteRenderer: {fileID: 1782160335}

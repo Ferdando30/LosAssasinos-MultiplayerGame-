@@ -17,6 +17,11 @@ public class TopDownController : NetworkBehaviour
     private bool AtualFlipX;
 
 
+    void Start()
+    {
+        RandomSkin();
+    }
+
     public void OnMove(InputAction.CallbackContext context)
     {
         if (!IsOwner)
