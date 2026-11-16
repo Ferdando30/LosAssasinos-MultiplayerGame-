@@ -1,6 +1,8 @@
+
 using UnityEngine;
 using Unity.Netcode;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerSpawnManager : NetworkBehaviour
 {
@@ -10,31 +12,79 @@ public class PlayerSpawnManager : NetworkBehaviour
     {
         if (IsServer)
         {
-            StartCoroutine(SpawnPlayers());
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted +=
+                OnSceneLoaded;
         }
     }
 
-    private IEnumerator SpawnPlayers()
+    public override void OnNetworkDespawn()
     {
-        // Espera a cena terminar de inicializar
-        yield return null;
+        if (IsServer)
+        {
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -=
+                OnSceneLoaded;
+        }
+    }
+
+    private void OnSceneLoaded(
+        string sceneName,
+        UnityEngine.SceneManagement.LoadSceneMode loadSceneMode,
+        List<ulong> clientsCompleted,
+        List<ulong> clientsTimedOut)
+    {
+        if (!IsServer)
+            return;
+
+        StartCoroutine(PositionPlayers(clientsCompleted));
+    }
+
+    private IEnumerator PositionPlayers(List<ulong> clientsCompleted)
+    {
+        yield return new WaitForSeconds(1f);
 
         int index = 0;
 
-        foreach (NetworkClient client in
-                 NetworkManager.Singleton.ConnectedClientsList)
+        foreach (ulong id in clientsCompleted)
         {
-            if (client.PlayerObject == null)
-                continue;
-
             Transform spawn = spawnPoints[index % spawnPoints.Length];
 
-            client.PlayerObject.transform.SetPositionAndRotation(
+            ClientRpcParams rpcParams = new ClientRpcParams
+            {
+                Send = new ClientRpcSendParams
+                {
+                    TargetClientIds = new ulong[] { id }
+                }
+            };
+
+            SetPlayerPositionClientRpc(
+                id,
                 spawn.position,
-                spawn.rotation
+                spawn.rotation,
+                rpcParams
             );
 
             index++;
         }
+    }
+
+    [ClientRpc]
+    private void SetPlayerPositionClientRpc(
+        ulong clientId,
+        Vector3 position,
+        Quaternion rotation,
+        ClientRpcParams rpcParams = default)
+    {
+        if (NetworkManager.Singleton.LocalClientId != clientId)
+            return;
+
+        NetworkObject player =
+            NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject();
+
+        if (player == null)
+            return;
+
+        player.transform.SetPositionAndRotation(position, rotation);
+
+        Debug.Log("Player " + clientId + " foi posicionado em " + position);
     }
 }
