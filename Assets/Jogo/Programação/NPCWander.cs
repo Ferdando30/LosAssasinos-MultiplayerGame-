@@ -29,7 +29,7 @@ public class NPCWander : MonoBehaviour
     void Update()
     {
         timer -= Time.deltaTime;
-
+        
         if (timer < 0f)
         {
             if (walking)
@@ -68,14 +68,10 @@ public class NPCWander : MonoBehaviour
     private void ChooseDirection()
     {
         direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
+
         walking = true;
 
         timer = Random.Range(minWalkTime, maxWalkTime);
-
-        if(spriteRenderer != null && direction.x != 0)
-        {
-            spriteRenderer.flipX = direction.x < 0;
-        }
     }
 
     private void RandomSkin()

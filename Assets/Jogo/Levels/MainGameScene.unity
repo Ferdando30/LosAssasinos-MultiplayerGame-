@@ -4619,13 +4619,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14d3a642464d84e4e894dfc0ee0cd416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MiniGames
-  ShowTopMostFoldoutHeaderGroup: 1
-  LightsFather: {fileID: 2138526909}
-  LightChecker:
-    UpdateTraits:
-      MinSecondsBetweenUpdates: 0
-      MaxSecondsBetweenUpdates: 0
-    m_InternalValue: 0
 --- !u!114 &893085540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10677,7 +10670,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   body: {fileID: 1782160334}
-  walkSpeed: 0
+  walkSpeed: 3
   animator: {fileID: 1782160328}
   spriteRenderer: {fileID: 1782160335}
   sprites:
