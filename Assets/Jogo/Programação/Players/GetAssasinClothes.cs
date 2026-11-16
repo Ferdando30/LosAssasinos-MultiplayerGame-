@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class GetAssasinClothes : MonoBehaviour
+public class GetAssasinClothes : NetworkBehaviour
 {
     private Transform playerLocal;
     public Collider2D AssasinColider;
@@ -12,9 +12,9 @@ public class GetAssasinClothes : MonoBehaviour
     public Image BtnImage;
 
     public RuntimeAnimatorController assasinControler;
-    public List <RuntimeAnimatorController> NormalControler;
+    public List<RuntimeAnimatorController> NormalControler;
 
-
+    private bool hasClothes = false;
 
     private void EncontrarPlayerLocal()
     {
@@ -25,7 +25,7 @@ public class GetAssasinClothes : MonoBehaviour
         {
             if (player.IsOwner && player.CompareTag("Player"))
             {
-                playerLocal = player.transform; 
+                playerLocal = player.transform;
                 PlayerAnim = player.GetComponent<Animator>();
                 break;
             }
@@ -35,30 +35,59 @@ public class GetAssasinClothes : MonoBehaviour
     private void Zonas()
     {
         EncontrarPlayerLocal();
+
         if (playerLocal == null)
             return;
 
         bool InMask = AssasinColider.bounds.Contains(playerLocal.position);
-        
+
         if (InMask)
         {
+           
             BtnImage.enabled = true;
         }
-
-        else if (!InMask)
+        else
         {
-BtnImage.enabled = false;
+            BtnImage.enabled = false;
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         Zonas();
     }
 
-    public void ChangeSkin()
+    public void BotaoTrocarSkin()
     {
-PlayerAnim.runtimeAnimatorController = assasinControler;
+        ChangeSkinRpc();
+    }
+
+    [Rpc(SendTo.Server)]
+    public void ChangeSkinRpc(RpcParams rpcParams = default)
+    {
+        ulong clientId = rpcParams.Receive.SenderClientId;
+        ChangeSkinOnAllClientsRpc(clientId);
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void ChangeSkinOnAllClientsRpc(ulong clientId)
+    {
+        foreach (NetworkObject player in FindObjectsByType<NetworkObject>(FindObjectsSortMode.None))
+        {
+            if (player.OwnerClientId == clientId && player.CompareTag("Player"))
+            {
+                Debug.Log("Jogador encontrado: " + player.name);
+
+                Animator anim = player.GetComponent<Animator>();
+
+                if (anim != null)
+                {
+                    anim.runtimeAnimatorController = assasinControler;
+                    Debug.Log("SKIN ALTERADA!");
+                }
+
+                break;
+            }
+        }
     }
 }
