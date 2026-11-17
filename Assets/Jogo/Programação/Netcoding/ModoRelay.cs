@@ -17,6 +17,7 @@ public class ModoRelay : MonoBehaviour
     public GameObject LobbyScreen;
     public GameObject StartScreen;
     public GameObject JoyStick;
+    public GameObject TitleScreen;
 
     public TextMeshProUGUI CodeTxt;
     public TMP_InputField joinInput;
@@ -32,6 +33,7 @@ public class ModoRelay : MonoBehaviour
         EntrarScreen.SetActive(false);
         LobbyScreen.SetActive(false);
         StartScreen.SetActive(true);
+        TitleScreen.SetActive(true);
         JoyStick.SetActive(false);
 
         await UnityServices.InitializeAsync();
@@ -83,5 +85,10 @@ public class ModoRelay : MonoBehaviour
         HostScreen.SetActive(false);
         EntrarScreen.SetActive(true);
         LobbyScreen.SetActive(false);
+    }
+
+    public void TitleScreenFunction()
+    {
+        TitleScreen.SetActive(false);
     }
 }
