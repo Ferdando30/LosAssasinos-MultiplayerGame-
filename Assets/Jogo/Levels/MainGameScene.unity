@@ -13275,6 +13275,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AssasinClothes
       objectReference: {fileID: 0}
+    - target: {fileID: 8984440133061179064, guid: b589a065f682d5c488526af0cff4bf32, type: 3}
+      propertyPath: m_TagString
+      value: Costume
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

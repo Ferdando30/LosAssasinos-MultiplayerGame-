@@ -15,7 +15,8 @@ public class TopDownController : NetworkBehaviour
 
     Vector2 keyboard_direction;
     private bool AtualFlipX;
-
+    public float timer;
+    private GameObject slasherCostume;
 
     void Start()
     {
@@ -30,6 +31,19 @@ public class TopDownController : NetworkBehaviour
         }
 
         keyboard_direction = context.ReadValue<Vector2>();
+    }
+
+    private void Update()
+    {
+        if (timer > 0f)
+        {
+            timer -= Time.deltaTime;
+        }
+        if (timer < 0f)
+        {
+            timer = 0f;
+            GetCostumeReference();
+        }
     }
 
     private void FixedUpdate()
@@ -65,6 +79,16 @@ public class TopDownController : NetworkBehaviour
         }
     }
     
+    private void GetCostumeReference()
+    {
+        GameObject[] gobjects = GameObject.FindGameObjectsWithTag("Costume");
+        foreach (GameObject obj in gobjects)
+        {
+            slasherCostume = obj;
+        }
+        print(slasherCostume.ToString());
+    }
+
     [Rpc(SendTo.Server)]
     private void SetSpriteFlipRpc(bool flipX)
     {
