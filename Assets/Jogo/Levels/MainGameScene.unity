@@ -11374,7 +11374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   body: {fileID: 1782160334}
-  walkSpeed: 3
+  walkSpeed: 1
   animator: {fileID: 1782160328}
   spriteRenderer: {fileID: 1782160335}
   sprites:

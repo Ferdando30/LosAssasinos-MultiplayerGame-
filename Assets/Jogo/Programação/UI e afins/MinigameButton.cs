@@ -166,7 +166,7 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
             }
             else if (currentZone == "ArmarioMiniGame")
             {
-                playerController.RandomSkin();
+                playerController.RandomSkinRpc();
             }
             else if (currentZone == "PhoneMiniGame")
             {

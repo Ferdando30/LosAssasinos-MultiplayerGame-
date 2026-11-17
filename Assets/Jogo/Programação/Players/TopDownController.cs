@@ -19,7 +19,7 @@ public class TopDownController : NetworkBehaviour
 
     void Start()
     {
-        RandomSkin();
+        RandomSkinRpc();
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -78,7 +78,8 @@ public class TopDownController : NetworkBehaviour
         AtualFlipX = flipX;
     }
 
-    public void RandomSkin()
+    [Rpc(SendTo.Everyone)]
+    public void RandomSkinRpc()
     {
         List<RuntimeAnimatorController> skins = sprites.FindAll(skin => skin != animator.runtimeAnimatorController);
 

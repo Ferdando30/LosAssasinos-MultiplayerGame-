@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class NPCWander : MonoBehaviour
@@ -19,10 +20,11 @@ public class NPCWander : MonoBehaviour
     private Vector2 direction;
     private float timer;
     private bool walking = false;
+    private bool atualFlipX;
 
     void Start()
     {
-        RandomSkin();
+        RandomSkinRpc();
         StartIdle();
     }
 
@@ -43,6 +45,17 @@ public class NPCWander : MonoBehaviour
         }
 
         animator.SetFloat("Speed", walking ? 1f : 0f);
+
+        if (direction.x != 0)
+        {
+            bool should_flip_x = direction.x < 0;
+
+            if (should_flip_x != atualFlipX)
+            {
+                atualFlipX = should_flip_x;
+                SetSpriteFlipRpc(should_flip_x);
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -55,6 +68,19 @@ public class NPCWander : MonoBehaviour
         {
             body.linearVelocity = Vector2.zero;
         }
+    }
+
+    [Rpc(SendTo.Server)]
+    private void SetSpriteFlipRpc(bool flipX)
+    {
+        ApplySpriteFlipRpc(flipX);
+    }
+
+    [Rpc(SendTo.Everyone)]
+    private void ApplySpriteFlipRpc(bool flipX)
+    {
+        spriteRenderer.flipX = flipX;
+        atualFlipX = flipX;
     }
 
     private void StartIdle()
@@ -74,7 +100,8 @@ public class NPCWander : MonoBehaviour
         timer = Random.Range(minWalkTime, maxWalkTime);
     }
 
-    private void RandomSkin()
+    [Rpc(SendTo.Everyone)]
+    private void RandomSkinRpc()
     {
         animator.runtimeAnimatorController = sprites[Random.Range(0, sprites.Count)];
     }
