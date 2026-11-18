@@ -10543,7 +10543,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   AssasinColider: {fileID: 1262712103}
   BtnImage: {fileID: 1625109248}
-  assasinControler: {fileID: 9100000, guid: 202694f60a4628849b907c243f93ec2f, type: 2}
+  assasinControler: {fileID: 9100000, guid: b20a71003dca5a74f87da2070584b1cd, type: 2}
   NormalControler:
   - {fileID: 9100000, guid: 6704de72ac8f6c046b3c06ba8b728ff6, type: 2}
   - {fileID: 9100000, guid: 9da17ac629c6d744cbcd86fa0b7fed1f, type: 2}
