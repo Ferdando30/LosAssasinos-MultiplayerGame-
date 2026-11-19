@@ -142,12 +142,12 @@ TextureImporter:
       name: Table Lamp_0
       rect:
         serializedVersion: 2
-        x: 9
+        x: 0
         y: 0
-        width: 15
-        height: 28
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -164,7 +164,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 721a225344a12e24cb416dfaad745e34
     internalID: 0
     vertices: []
     indices: 
