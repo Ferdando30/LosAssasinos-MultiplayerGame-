@@ -4937,6 +4937,7 @@ GameObject:
   - component: {fileID: 953871594}
   - component: {fileID: 953871593}
   - component: {fileID: 953871592}
+  - component: {fileID: 953871596}
   m_Layer: 0
   m_Name: Door Side Wood_0 (1)
   m_TagString: Untagged
@@ -5002,9 +5003,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6383ad437c20534b83e84ed48275bfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OpenDoor
+  ShowTopMostFoldoutHeaderGroup: 1
   DoorCollider: {fileID: 953871592}
   OpenDoorSprite: {fileID: 774256281675327659, guid: 7655d925e23855f45b40355011795376, type: 3}
   ClosedDoorSprite: {fileID: 2012291561466136476, guid: 7655d925e23855f45b40355011795376, type: 3}
+  DoorChecker:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
 --- !u!212 &953871594
 SpriteRenderer:
   serializedVersion: 2
@@ -5079,6 +5086,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 65188015}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &953871596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953871591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 3093062841
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  m_InScenePlaced: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &995843164
 GameObject:
   m_ObjectHideFlags: 0
@@ -5175,6 +5209,7 @@ GameObject:
   - component: {fileID: 1006706836}
   - component: {fileID: 1006706835}
   - component: {fileID: 1006706834}
+  - component: {fileID: 1006706837}
   m_Layer: 0
   m_Name: Door Side Wood_1 (3)
   m_TagString: Untagged
@@ -5209,9 +5244,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6383ad437c20534b83e84ed48275bfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OpenDoor
+  ShowTopMostFoldoutHeaderGroup: 1
   DoorCollider: {fileID: 1006706835}
   OpenDoorSprite: {fileID: 3481406778765343460, guid: f556af19287ffe74bab22f6432b554b8, type: 3}
   ClosedDoorSprite: {fileID: 4032505005452000444, guid: f556af19287ffe74bab22f6432b554b8, type: 3}
+  DoorChecker:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
 --- !u!61 &1006706835
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5317,6 +5358,33 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1006706837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006706832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 695757482
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  m_InScenePlaced: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &1074457185
 GameObject:
   m_ObjectHideFlags: 0
@@ -9542,6 +9610,7 @@ GameObject:
   - component: {fileID: 1239282986}
   - component: {fileID: 1239282985}
   - component: {fileID: 1239282984}
+  - component: {fileID: 1239282987}
   m_Layer: 0
   m_Name: Door Side Wood_1 (1)
   m_TagString: Untagged
@@ -9576,9 +9645,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6383ad437c20534b83e84ed48275bfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OpenDoor
+  ShowTopMostFoldoutHeaderGroup: 1
   DoorCollider: {fileID: 1239282985}
   OpenDoorSprite: {fileID: 3481406778765343460, guid: f556af19287ffe74bab22f6432b554b8, type: 3}
   ClosedDoorSprite: {fileID: 4032505005452000444, guid: f556af19287ffe74bab22f6432b554b8, type: 3}
+  DoorChecker:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
 --- !u!61 &1239282985
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9684,6 +9759,33 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1239282987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239282982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 998398781
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  m_InScenePlaced: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!61 &1262712103 stripped
 BoxCollider2D:
   m_CorrespondingSourceObject: {fileID: 7707090940177177226, guid: b589a065f682d5c488526af0cff4bf32, type: 3}
@@ -10642,6 +10744,7 @@ GameObject:
   - component: {fileID: 1596737969}
   - component: {fileID: 1596737968}
   - component: {fileID: 1596737967}
+  - component: {fileID: 1596737970}
   m_Layer: 0
   m_Name: Door Side Wood_1 (2)
   m_TagString: Untagged
@@ -10676,9 +10779,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6383ad437c20534b83e84ed48275bfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OpenDoor
+  ShowTopMostFoldoutHeaderGroup: 1
   DoorCollider: {fileID: 1596737968}
   OpenDoorSprite: {fileID: 3481406778765343460, guid: f556af19287ffe74bab22f6432b554b8, type: 3}
   ClosedDoorSprite: {fileID: 4032505005452000444, guid: f556af19287ffe74bab22f6432b554b8, type: 3}
+  DoorChecker:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
 --- !u!61 &1596737968
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10784,6 +10893,33 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1596737970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596737965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 3238373507
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  m_InScenePlaced: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &1609784923
 GameObject:
   m_ObjectHideFlags: 0
@@ -11135,6 +11271,7 @@ GameObject:
   - component: {fileID: 1691995970}
   - component: {fileID: 1691995969}
   - component: {fileID: 1691995968}
+  - component: {fileID: 1691995972}
   m_Layer: 0
   m_Name: Door Side Wood_0
   m_TagString: Untagged
@@ -11200,9 +11337,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6383ad437c20534b83e84ed48275bfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OpenDoor
+  ShowTopMostFoldoutHeaderGroup: 1
   DoorCollider: {fileID: 1691995968}
   OpenDoorSprite: {fileID: 774256281675327659, guid: 7655d925e23855f45b40355011795376, type: 3}
   ClosedDoorSprite: {fileID: 2012291561466136476, guid: 7655d925e23855f45b40355011795376, type: 3}
+  DoorChecker:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
 --- !u!212 &1691995970
 SpriteRenderer:
   serializedVersion: 2
@@ -11277,6 +11420,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 65188015}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1691995972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1691995967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 838312283
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  m_InScenePlaced: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &1776846845
 GameObject:
   m_ObjectHideFlags: 0
@@ -11823,6 +11993,7 @@ GameObject:
   - component: {fileID: 1808486432}
   - component: {fileID: 1808486431}
   - component: {fileID: 1808486430}
+  - component: {fileID: 1808486434}
   m_Layer: 0
   m_Name: Door Side Wood_0 (2)
   m_TagString: Untagged
@@ -11888,9 +12059,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6383ad437c20534b83e84ed48275bfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OpenDoor
+  ShowTopMostFoldoutHeaderGroup: 1
   DoorCollider: {fileID: 1808486430}
   OpenDoorSprite: {fileID: 774256281675327659, guid: 7655d925e23855f45b40355011795376, type: 3}
   ClosedDoorSprite: {fileID: 2012291561466136476, guid: 7655d925e23855f45b40355011795376, type: 3}
+  DoorChecker:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
 --- !u!212 &1808486432
 SpriteRenderer:
   serializedVersion: 2
@@ -11965,6 +12142,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 65188015}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1808486434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808486429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 3102486207
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  m_InScenePlaced: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &1840993161
 GameObject:
   m_ObjectHideFlags: 0
@@ -13149,6 +13353,7 @@ GameObject:
   - component: {fileID: 2047225895}
   - component: {fileID: 2047225894}
   - component: {fileID: 2047225893}
+  - component: {fileID: 2047225897}
   - component: {fileID: 2047225896}
   m_Layer: 0
   m_Name: Door Side Wood_1
@@ -13289,9 +13494,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6383ad437c20534b83e84ed48275bfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OpenDoor
+  ShowTopMostFoldoutHeaderGroup: 1
   DoorCollider: {fileID: 2047225893}
   OpenDoorSprite: {fileID: 3481406778765343460, guid: f556af19287ffe74bab22f6432b554b8, type: 3}
   ClosedDoorSprite: {fileID: 4032505005452000444, guid: f556af19287ffe74bab22f6432b554b8, type: 3}
+  DoorChecker:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
+--- !u!114 &2047225897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047225892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 837816399
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  m_InScenePlaced: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &2073505069
 GameObject:
   m_ObjectHideFlags: 0
@@ -13304,6 +13542,7 @@ GameObject:
   - component: {fileID: 2073505073}
   - component: {fileID: 2073505072}
   - component: {fileID: 2073505071}
+  - component: {fileID: 2073505074}
   m_Layer: 0
   m_Name: Door Side Wood_1 (4)
   m_TagString: Untagged
@@ -13338,9 +13577,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6383ad437c20534b83e84ed48275bfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OpenDoor
+  ShowTopMostFoldoutHeaderGroup: 1
   DoorCollider: {fileID: 2073505072}
   OpenDoorSprite: {fileID: 3481406778765343460, guid: f556af19287ffe74bab22f6432b554b8, type: 3}
   ClosedDoorSprite: {fileID: 4032505005452000444, guid: f556af19287ffe74bab22f6432b554b8, type: 3}
+  DoorChecker:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
 --- !u!61 &2073505072
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -13446,6 +13691,33 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &2073505074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2073505069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 2083981634
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  m_InScenePlaced: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &2138526909
 GameObject:
   m_ObjectHideFlags: 0

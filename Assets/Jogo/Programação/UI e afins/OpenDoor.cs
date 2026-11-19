@@ -3,56 +3,72 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
-public class OpenDoor : MonoBehaviour
+public class OpenDoor : NetworkBehaviour
 {
-    private Transform playerLocal;
+    //private Transform playerLocal;
     public Collider2D DoorCollider;
 
     public Sprite OpenDoorSprite;
     public Sprite ClosedDoorSprite;
 
-    
+    private SpriteRenderer myRenderer;
 
-    private void EncontrarPlayerLocal()
-    {
-        if (playerLocal != null)
-            return;
-
-        foreach (NetworkObject player in FindObjectsByType<NetworkObject>(FindObjectsSortMode.None))
-        {
-            if (player.IsOwner && player.CompareTag("Player"))
-            {
-                playerLocal = player.transform; 
-                break;
-            }
-        }
-    }
+    public NetworkVariable<bool> DoorChecker = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
     private void Zonas()
     {
-        EncontrarPlayerLocal();
-        if (playerLocal == null)
-            return;
+        bool playerInside = false;
 
-        bool InDoor = DoorCollider.bounds.Contains(playerLocal.position);
-
-        SpriteRenderer myRenderer = GetComponent<SpriteRenderer>();
-        
-        if (InDoor)
+        foreach (NetworkObject player in FindObjectsByType<NetworkObject>(FindObjectsSortMode.None))
         {
-            
-            myRenderer.sprite = OpenDoorSprite;
+            if (!player.CompareTag("Player"))
+                continue;
+
+            if (DoorCollider.bounds.Contains(player.transform.position))
+            {
+                playerInside = true;
+                break;
+            }
         }
 
-        else if (!InDoor)
+        if (DoorChecker.Value != playerInside)
         {
-            myRenderer.sprite = ClosedDoorSprite;
+            DoorChecker.Value = playerInside;
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (!IsSpawned || !IsServer)
+            return;
+
         Zonas();
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        myRenderer = GetComponent<SpriteRenderer>();
+
+        DoorChecker.OnValueChanged += OnDoorChange;
+
+        AtualizarSprite(DoorChecker.Value);
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        DoorChecker.OnValueChanged -= OnDoorChange;
+    }
+
+    private void OnDoorChange(bool previousValue, bool newValue)
+    {
+        AtualizarSprite(newValue);
+    }
+
+    private void AtualizarSprite(bool isOpen)
+    {
+        if (isOpen)
+            myRenderer.sprite = OpenDoorSprite;
+        else
+            myRenderer.sprite = ClosedDoorSprite;
     }
 }
