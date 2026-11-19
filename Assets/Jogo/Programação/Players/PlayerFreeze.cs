@@ -13,6 +13,8 @@ public class PlayerFreeze : NetworkBehaviour
     private SpectatorCameraController cameraController;
     private OnScreenStick joystick;
 
+    private Animator animator;
+
     private NetworkVariable<bool> IsFrozen = new NetworkVariable<bool>(
         false,
         NetworkVariableReadPermission.Everyone,
@@ -30,6 +32,7 @@ public class PlayerFreeze : NetworkBehaviour
     {
         IsFrozen.OnValueChanged += FreezePlayerChecker;
         FrozenBy.OnValueChanged += OnFrozenByChanged;
+        animator = GetComponentInChildren<Animator>();
 
         if (IsOwner)
         {
@@ -94,6 +97,8 @@ public class PlayerFreeze : NetworkBehaviour
             // Esconde o joystick apenas neste cliente
             if (joystick != null)
                 joystick.gameObject.SetActive(false);
+            if (animator != null)
+                animator.SetBool("Dead", true);
 
             if (FrozenBy.Value.TryGet(out NetworkObject attacker))
             {
