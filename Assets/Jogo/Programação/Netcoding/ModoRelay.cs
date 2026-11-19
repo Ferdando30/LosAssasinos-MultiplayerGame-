@@ -19,6 +19,9 @@ public class ModoRelay : MonoBehaviour
     public GameObject JoyStick;
     public GameObject TitleScreen;
 
+    public GameObject DiscoStart;
+    public GameObject DiscoOptions;
+
     public TextMeshProUGUI CodeTxt;
     public TMP_InputField joinInput;
 
@@ -33,6 +36,8 @@ public class ModoRelay : MonoBehaviour
         EntrarScreen.SetActive(false);
         LobbyScreen.SetActive(false);
         StartScreen.SetActive(true);
+        DiscoStart.SetActive(true);
+        DiscoOptions.SetActive(false);
         TitleScreen.SetActive(true);
         JoyStick.SetActive(false);
 
@@ -90,5 +95,20 @@ public class ModoRelay : MonoBehaviour
     public void TitleScreenFunction()
     {
         TitleScreen.SetActive(false);
+    }
+
+    public void Options()
+    {
+        DiscoStart.SetActive(false);
+        DiscoOptions.SetActive(true);
+    }
+
+    public void Back()
+    {
+        DiscoStart.SetActive(true);
+        DiscoOptions.SetActive(false);
+        HostScreen.SetActive(false);
+        EntrarScreen.SetActive(false);
+        InicioHolder.SetActive(true);
     }
 }
