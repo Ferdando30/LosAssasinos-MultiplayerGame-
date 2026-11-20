@@ -2,6 +2,7 @@ using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections;
 
 public class KillOtherPlayer : NetworkBehaviour
 {
@@ -99,11 +100,20 @@ public class KillOtherPlayer : NetworkBehaviour
         if (attacker == null)
             return;
 
+        animator.SetBool("Kill", true);
+        StartCoroutine(ResetKillAnimation());
+
         FreezeTargetRpc(
             new NetworkObjectReference(playerTarget),
             new NetworkObjectReference(attacker)
         );
 
+    }
+
+    private IEnumerator ResetKillAnimation()
+    {
+        yield return new WaitForSeconds(0.8f);
+        animator.SetBool("Kill", false);
     }
 
     private void Update()
