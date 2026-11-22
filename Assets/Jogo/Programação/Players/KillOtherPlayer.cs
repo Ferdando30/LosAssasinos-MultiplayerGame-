@@ -85,13 +85,18 @@ public class KillOtherPlayer : NetworkBehaviour
                 }
             }
         }
-
-        KillBtnImage.enabled = InsidePlayerKillBox;
+        PlayerMask mask = playerLocal.GetComponent<PlayerMask>();
+        KillBtnImage.enabled = InsidePlayerKillBox && mask != null && mask.HasMask.Value;
     }
 
     public void killOtherPlayer()
     {
         if (playerTarget == null || playerLocal == null)
+            return;
+
+        PlayerMask mask = playerLocal.GetComponent<PlayerMask>();
+
+        if (mask == null || !mask.HasMask.Value)
             return;
 
         NetworkObject attacker =

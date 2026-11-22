@@ -55,6 +55,7 @@ public class GetAssasinClothes : NetworkBehaviour
     void Update()
     {
         Zonas();
+        
     }
 
     public void BotaoTrocarSkin()
@@ -78,12 +79,21 @@ public class GetAssasinClothes : NetworkBehaviour
             {
                 Debug.Log("Jogador encontrado: " + player.name);
 
+                PlayerMask mask = player.GetComponent<PlayerMask>();
+
+                if (mask != null)
+                {
+                    mask.GetMask();
+                }
+
+
                 Animator anim = player.GetComponent<Animator>();
 
                 if (anim != null)
                 {
-                    anim.runtimeAnimatorController = assasinControler;
-                    Debug.Log("SKIN ALTERADA!");
+                        anim.runtimeAnimatorController = assasinControler;
+                        Debug.Log("SKIN ALTERADA!");
+                   
                 }
 
                 break;
