@@ -10,6 +10,8 @@ public class PlayerMask : NetworkBehaviour
         NetworkVariableWritePermission.Server
     );
 
+    
+
     public void GetMask()
     {
         if (!IsServer) return;
@@ -20,7 +22,7 @@ public class PlayerMask : NetworkBehaviour
 
     IEnumerator MaskTimer()
     {
-        yield return new WaitForSeconds(60f);
+        yield return new WaitForSeconds(10f);
 
         HasMask.Value = false;
     }

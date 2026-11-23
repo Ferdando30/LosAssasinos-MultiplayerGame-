@@ -16,6 +16,8 @@ public class GetAssasinClothes : NetworkBehaviour
 
     private bool hasClothes = false;
 
+    private HashSet<ulong> maskConfirmed = new HashSet<ulong>();
+
     private void EncontrarPlayerLocal()
     {
         if (playerLocal != null)
@@ -55,7 +57,36 @@ public class GetAssasinClothes : NetworkBehaviour
     void Update()
     {
         Zonas();
-        
+        VerificarMascara();
+    }
+
+    private void VerificarMascara()
+    {
+        foreach (NetworkObject player in FindObjectsByType<NetworkObject>(FindObjectsSortMode.None))
+        {
+            if (!player.CompareTag("Player"))
+                continue;
+
+            PlayerMask mask = player.GetComponent<PlayerMask>();
+
+            if (mask == null)
+                continue;
+
+            if (mask.HasMask.Value)
+            {
+                maskConfirmed.Add(player.OwnerClientId);
+            }
+            else if (maskConfirmed.Contains(player.OwnerClientId) && IsServer)
+            {
+                int randomSkin = Random.Range(0, NormalControler.Count);
+
+                ChangeToNormalSkinRpc(player.OwnerClientId, randomSkin);
+
+                maskConfirmed.Remove(player.OwnerClientId);
+
+                Debug.Log("VOLTANDO PARA SKIN NORMAL!");
+            }
+        }
     }
 
     public void BotaoTrocarSkin()
@@ -67,6 +98,22 @@ public class GetAssasinClothes : NetworkBehaviour
     public void ChangeSkinRpc(RpcParams rpcParams = default)
     {
         ulong clientId = rpcParams.Receive.SenderClientId;
+
+        foreach (NetworkObject player in FindObjectsByType<NetworkObject>(FindObjectsSortMode.None))
+        {
+            if (player.OwnerClientId == clientId && player.CompareTag("Player"))
+            {
+                PlayerMask mask = player.GetComponent<PlayerMask>();
+
+                if (mask != null)
+                {
+                    mask.GetMask();
+                }
+
+                break;
+            }
+        }
+
         ChangeSkinOnAllClientsRpc(clientId);
     }
 
@@ -79,21 +126,34 @@ public class GetAssasinClothes : NetworkBehaviour
             {
                 Debug.Log("Jogador encontrado: " + player.name);
 
-                PlayerMask mask = player.GetComponent<PlayerMask>();
-
-                if (mask != null)
-                {
-                    mask.GetMask();
-                }
-
+                
 
                 Animator anim = player.GetComponent<Animator>();
 
                 if (anim != null)
-                {
+                {   
                         anim.runtimeAnimatorController = assasinControler;
-                        Debug.Log("SKIN ALTERADA!");
-                   
+                        Debug.Log("SKIN ALTERADA!");              
+                    
+                }
+
+                break;
+            }
+        }
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    private void ChangeToNormalSkinRpc(ulong clientId, int skinIndex)
+    {
+        foreach (NetworkObject player in FindObjectsByType<NetworkObject>(FindObjectsSortMode.None))
+        {
+            if (player.OwnerClientId == clientId && player.CompareTag("Player"))
+            {
+                Animator anim = player.GetComponent<Animator>();
+
+                if (anim != null)
+                {
+                    anim.runtimeAnimatorController = NormalControler[skinIndex];
+                    Debug.Log("SKIN NORMAL SINCRONIZADA!");
                 }
 
                 break;
@@ -101,3 +161,5 @@ public class GetAssasinClothes : NetworkBehaviour
         }
     }
 }
+
+   
