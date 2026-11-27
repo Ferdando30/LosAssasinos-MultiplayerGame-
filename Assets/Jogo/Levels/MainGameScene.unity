@@ -12023,11 +12023,6 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!61 &1262712103 stripped
-BoxCollider2D:
-  m_CorrespondingSourceObject: {fileID: 7707090940177177226, guid: b589a065f682d5c488526af0cff4bf32, type: 3}
-  m_PrefabInstance: {fileID: 4459688698824597580}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1276504760
 GameObject:
   m_ObjectHideFlags: 0
@@ -13065,6 +13060,7 @@ GameObject:
   - component: {fileID: 1534239620}
   - component: {fileID: 1534239619}
   - component: {fileID: 1534239622}
+  - component: {fileID: 1534239623}
   m_Layer: 5
   m_Name: OpenMinigameButton
   m_TagString: Untagged
@@ -13250,6 +13246,19 @@ MonoBehaviour:
   KnifeOff: {fileID: -6060294708918946895, guid: fd2a4f941b69fe144a659b4d8e0e325a, type: 3}
   LightsOn: {fileID: -1370387466233988019, guid: 1c271982548b7a146bc0fd85763ad175, type: 3}
   LightsOff: {fileID: -4689486003765891709, guid: 1c271982548b7a146bc0fd85763ad175, type: 3}
+--- !u!114 &1534239623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534239617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b7a4122e6434c44587189ed05de48c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TaskReporter
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &1534780968
 GameObject:
   m_ObjectHideFlags: 0
@@ -14008,7 +14017,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GetAssasinClothes
   ShowTopMostFoldoutHeaderGroup: 1
-  AssasinColider: {fileID: 1262712103}
   BtnImage: {fileID: 1625109248}
   assasinControler: {fileID: 9100000, guid: b20a71003dca5a74f87da2070584b1cd, type: 2}
   NormalControler:
@@ -17708,7 +17716,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3343889817649116754, guid: b589a065f682d5c488526af0cff4bf32, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.54
+      value: -16.76
       objectReference: {fileID: 0}
     - target: {fileID: 3343889817649116754, guid: b589a065f682d5c488526af0cff4bf32, type: 3}
       propertyPath: m_LocalPosition.y

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class GetAssasinClothes : NetworkBehaviour
 {
     private Transform playerLocal;
-    public Collider2D AssasinColider;
+    private Collider2D AssasinColider;
     private Animator PlayerAnim;
     public Image BtnImage;
 
@@ -17,6 +17,16 @@ public class GetAssasinClothes : NetworkBehaviour
     private bool hasClothes = false;
 
     private HashSet<ulong> maskConfirmed = new HashSet<ulong>();
+
+    private void Awake()
+    {
+        GameObject[] clothesObj = GameObject.FindGameObjectsWithTag("Costume");
+        foreach(GameObject obj in clothesObj)
+        {
+            AssasinColider = obj.GetComponent<Collider2D>();
+        }
+        
+    }
 
     private void EncontrarPlayerLocal()
     {
