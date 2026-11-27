@@ -1,15 +1,21 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using TMPro;
 
 public class Cutscene : MonoBehaviour
 {
     public GameObject VideoPlayer;
-    public GameObject CanvasObg;
+    public GameObject JoyStick;
+    public Image TaskScreen;
+    public TMP_Text TaskTxt;
 
     private void Awake()
     {
         VideoPlayer.SetActive(true);
-        CanvasObg.SetActive(false);
+        JoyStick.SetActive(false);
+        TaskScreen.enabled = false;
+        TaskTxt.enabled = false;
 
         StartCoroutine(FinishCinematic());
     }
@@ -18,6 +24,8 @@ public class Cutscene : MonoBehaviour
     {
         yield return new WaitForSeconds(7f);
         VideoPlayer.SetActive(false);
-        CanvasObg.SetActive(true);
+        JoyStick.SetActive(true);
+        TaskScreen.enabled = true;
+        TaskTxt.enabled = true;
     }
 }

@@ -66962,7 +66962,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cutscene
   VideoPlayer: {fileID: 1851629179}
-  CanvasObg: {fileID: 1945306458}
+  JoyStick: {fileID: 1471485171}
+  TaskScreen: {fileID: 453124653}
+  TaskTxt: {fileID: 1124848731}
 --- !u!1 &1859463776
 GameObject:
   m_ObjectHideFlags: 0
