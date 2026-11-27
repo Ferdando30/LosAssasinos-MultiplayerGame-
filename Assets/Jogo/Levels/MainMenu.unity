@@ -3983,7 +3983,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.PixelPerfectCamera
   m_ComponentVersion: 1
-  m_AssetsPPU: 49
+  m_AssetsPPU: 34
   m_RefResolutionX: 230
   m_RefResolutionY: 130
   m_CropFrame: 0
@@ -4115,7 +4115,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 2.3112245
+  orthographic size: 1.9251337
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
