@@ -4,10 +4,12 @@ using System.Collections;
 public class Cutscene : MonoBehaviour
 {
     public GameObject VideoPlayer;
+    public GameObject CanvasObg;
 
     private void Awake()
     {
         VideoPlayer.SetActive(true);
+        CanvasObg.SetActive(false);
 
         StartCoroutine(FinishCinematic());
     }
@@ -16,5 +18,6 @@ public class Cutscene : MonoBehaviour
     {
         yield return new WaitForSeconds(7f);
         VideoPlayer.SetActive(false);
+        CanvasObg.SetActive(true);
     }
 }
