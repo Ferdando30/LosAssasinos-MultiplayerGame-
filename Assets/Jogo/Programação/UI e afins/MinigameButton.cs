@@ -251,29 +251,34 @@ public class MinigameButton : NetworkBehaviour, IPointerDownHandler, IPointerUpH
     void TurnLightsOffRpc()
     {
         LightChecker.Value = true;
+        GetComponent<TaskReporter>().RequestTaskCompletion(0);
     }
 
     [Rpc(SendTo.Server)]
     void PoisonDrinkRpc()
     {
         PoisonChecker.Value = true;
+        GetComponent<TaskReporter>().RequestTaskCompletion(3);
     }
 
     [Rpc(SendTo.Server)]
     void PhoneBreakRpc()
     {
         PhoneChecker.Value = true;
+        GetComponent<TaskReporter>().RequestTaskCompletion(1);
     }
 
     [Rpc(SendTo.Server)]
     void AlarmOffRpc()
     {
         AlarmChecker.Value = true;
+        GetComponent<TaskReporter>().RequestTaskCompletion(4);
     }
 
     [Rpc(SendTo.Server)]
     void KnifeOffRpc()
     {
         StealKnifeChecker.Value = true;
+        GetComponent<TaskReporter>().RequestTaskCompletion(2);
     }
 }

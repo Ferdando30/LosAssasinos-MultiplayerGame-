@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 6939890481128625133}
   - component: {fileID: -8996539695470507895}
   - component: {fileID: 7893251762169324717}
+  - component: {fileID: 2032132996259302435}
+  - component: {fileID: 3121351941836610877}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -143,7 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3904197687
+  GlobalObjectIdHash: 955474306
   InScenePlacedSourceGlobalObjectIdHash: 0
   m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
@@ -436,6 +438,37 @@ MonoBehaviour:
       MinSecondsBetweenUpdates: 0
       MaxSecondsBetweenUpdates: 0
     m_InternalValue: 0
+--- !u!114 &2032132996259302435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1803147111570246855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f10db7477a2420e4b8e0f3523281da19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerScore
+  ShowTopMostFoldoutHeaderGroup: 1
+  Points:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
+--- !u!114 &3121351941836610877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1803147111570246855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b7a4122e6434c44587189ed05de48c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TaskReporter
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &3431378726639864614
 GameObject:
   m_ObjectHideFlags: 0
