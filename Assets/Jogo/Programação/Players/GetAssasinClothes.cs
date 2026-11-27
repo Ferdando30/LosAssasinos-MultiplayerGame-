@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class GetAssasinClothes : NetworkBehaviour
 {
     private Transform playerLocal;
-    private Collider2D AssasinColider;
+    private List<Collider2D> AssasinColiders = new List<Collider2D>();
     private Animator PlayerAnim;
     public Image BtnImage;
 
@@ -18,15 +18,7 @@ public class GetAssasinClothes : NetworkBehaviour
 
     private HashSet<ulong> maskConfirmed = new HashSet<ulong>();
 
-    private void Awake()
-    {
-        GameObject[] clothesObj = GameObject.FindGameObjectsWithTag("Costume");
-        foreach(GameObject obj in clothesObj)
-        {
-            AssasinColider = obj.GetComponent<Collider2D>();
-        }
-        
-    }
+    
 
     private void EncontrarPlayerLocal()
     {
@@ -51,7 +43,16 @@ public class GetAssasinClothes : NetworkBehaviour
         if (playerLocal == null)
             return;
 
-        bool InMask = AssasinColider.bounds.Contains(playerLocal.position);
+        bool InMask = false;
+
+        foreach (Collider2D col in AssasinColiders)
+        {
+            if (col.bounds.Contains(playerLocal.position))
+            {
+                InMask = true;
+                break;
+            }
+        }
 
         if (InMask)
         {
@@ -66,6 +67,18 @@ public class GetAssasinClothes : NetworkBehaviour
 
     void Update()
     {
+        GameObject[] clothesObj = GameObject.FindGameObjectsWithTag("Costume");
+
+        foreach (GameObject obj in clothesObj)
+        {
+            Collider2D col = obj.GetComponent<Collider2D>();
+
+            if (col != null && !AssasinColiders.Contains(col))
+            {
+                AssasinColiders.Add(col);
+            }
+        }
+
         Zonas();
         VerificarMascara();
     }
